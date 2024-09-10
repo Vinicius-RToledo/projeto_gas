@@ -22,6 +22,9 @@ main {
     .navegation {
         height: 150px;
     }
+    .div-botao-voltar {
+        margin-top: 45px;
+    }
 }
 
 @media (max-width: 884px) {
@@ -30,6 +33,9 @@ main {
     }
     .navegation {
         height: 150px;
+    }
+    .div-botao-voltar {
+        margin-top: 40px;
     }
 }
 
@@ -51,6 +57,9 @@ main {
       .main-container {
         margin-top: 180px; /* Ajuste o valor para garantir que o conteúdo não fique escondido */
       }
+      .div-botao-voltar {
+        margin-top: 15px;
+    }
 
     
 }
@@ -69,6 +78,19 @@ main {
 .btn-at-home {
     width: 200px;
     background-color: var(--cor-primaria) !important;
+    transition: background-color 0.1s, color 0.1s;
+}
+
+.btn-new-client, .btn-voltar {
+    font-size: 16px;
+    width: 200px;
+    background-color: #ef6c00;
+    transition: background-color 0.1s, color 0.1s;
+}
+
+.btn-new-client:hover, .btn-voltar:hover {
+    background-color: #0301fa;
+    color: #ef6c00;
     transition: background-color 0.1s, color 0.1s;
 }
 

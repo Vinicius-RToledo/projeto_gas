@@ -12,13 +12,38 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="/js/CRUD_clientes.js"></script>
     <style>
-        main {
-            position: relative;
-            /* Ou relative, se preferir */
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            margin-top: 0px;
+        @media (max-width: 2000px) {
+            main {
+                position: relative;
+                /* Ou relative, se preferir */
+                top: 0;
+                left: 0;
+                z-index: 1000;
+                margin-top: 0px;
+            }
+        }
+
+        @media (max-width: 885px) {
+            main {
+                margin-top: 100px;
+            }
+
+            .navegation {
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .navegation {
+                height: 250px;
+            }
+            main {
+                margin-top: 0px;
+                margin-bottom: 5%;
+            }
+            .main-container {
+                margin-top: 10px;
+            }
         }
     </style>
 </head>
@@ -26,19 +51,15 @@
 <body>
 
     <header>
-        <nav class="navegation white" style="@media (max-width: 430px) {
-            .navegation {
-                height: 250px;
-            }
-        }">
+        <nav class="navegation white">
             <div class="row">
                 <div class="col m4 l5"></div>
                 <div class="col s12 m4 l2 center"><img src="/img/logo.jpg" style="width: 200px; margin-top: 30px;"
                         alt="Logo">
                 </div>
 
-                <div class="col s12 m4 l5 center " style="margin-top: 40px;"><a href="/pages/index.html"
-                        class="btn-voltar waves-effect waves-light btn-small orange darken-3">Voltar</a>
+                <div class="col s12 m4 l5 center div-botao-voltar"><a href="/pages/index.html"
+                        class="btn-voltar btn-small">Voltar</a>
                 </div>
             </div>
         </nav>
@@ -46,7 +67,7 @@
 
     <main>
         <div class="row">
-            <div class="col s12 center white-text ">
+            <div class="col s12 center white-text">
                 <h1>CLIENTES</h1>
             </div>
         </div>
@@ -71,9 +92,10 @@
 
 
             <!-- Botão Novo Cliente-->
+            <div class="row"></div>
             <div class="row center-align">
                 <div class="col s12">
-                    <a href="cadastrarProduto.html" class="waves-effect waves-light btn-large orange">NOVO CLIENTE</a>
+                    <a href="cadastrarProduto.html" class="btn-small btn-new-client">NOVO CLIENTE</a>
                 </div>
             </div>
             <!-- Modal Editar -->
