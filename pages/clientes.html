@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RC Gás e Água - Produtos</title>
+    <!-- Link para o Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <!-- Seu estilo personalizado -->
+    <link rel="stylesheet" href="/css/custom.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="/js/CRUD_clientes.js"></script>
+    <style>
+        main {
+            position: relative;
+            /* Ou relative, se preferir */
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            margin-top: 0px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navegation white" style="@media (max-width: 430px) {
+            .navegation {
+                height: 250px;
+            }
+        }">
+            <div class="row">
+                <div class="col m4 l5"></div>
+                <div class="col s12 m4 l2 center"><img src="/img/logo.jpg" style="width: 200px; margin-top: 30px;"
+                        alt="Logo">
+                </div>
+
+                <div class="col s12 m4 l5 center " style="margin-top: 40px;"><a href="/pages/index.html"
+                        class="btn-voltar waves-effect waves-light btn-small orange darken-3">Voltar</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="row">
+            <div class="col s12 center white-text ">
+                <h1>CLIENTES</h1>
+            </div>
+        </div>
+        <div class=" row container main-container">
+
+            <table class=" white centered centered responsive-table">
+                <thead>
+                    <tr>
+                        <th>ID Cliente</th>
+                        <th>Nome Cliente</th>
+                        <th>Telefone Cliente</th>
+                        <th>Rua Cliente</th>
+                        <th>Número Cliente</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody id="dados-api">
+
+                </tbody>
+            </table>
+
+
+            <!-- Botão Novo Cliente-->
+            <div class="row center-align">
+                <div class="col s12">
+                    <a href="cadastrarProduto.html" class="waves-effect waves-light btn-large orange">NOVO CLIENTE</a>
+                </div>
+            </div>
+            <!-- Modal Editar -->
+            <div id="editar-cliente" class="modal">
+                <div class="modal-content">
+                    <h4>Editar Cliente</h4>
+                    <form id="cliente-form" class="col s12">
+                        <!-- Primeira linha de inputs -->
+                        <div class="row">
+                            <!-- Campo ID -->
+                            <div class="input-field col s12" style="display: none;">
+                                <input id="id" name="id_cliente" type="text" class="validate" required>
+                                <label class="active" for="id">ID do Cliente</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- Campo Nome -->
+                            <div class="input-field col s6">
+                                <input id="nome" name="nome_cliente" type="text" class="validate" required>
+                                <label class="active" for="nome">Nome</label>
+                            </div>
+
+                            <!-- Campo Telefone -->
+                            <div class="input-field col s6">
+                                <input id="telefone" name="telefone_cliente" type="text" class="validate" required>
+                                <label class="active" for="telefone">Telefone</label>
+                            </div>
+                        </div>
+
+                        <!-- Segunda linha de inputs -->
+                        <div class="row">
+                            <!-- Campo Rua -->
+                            <div class="input-field col s6">
+                                <input id="rua" name="rua_cliente" type="text" class="validate" required>
+                                <label class="active" for="rua">Rua</label>
+                            </div>
+
+                            <!-- Campo Número -->
+                            <div class="input-field col s6">
+                                <input id="numero" name="numero_cliente" type="text" class="validate" required>
+                                <label class="active" for="numero">Número</label>
+                            </div>
+                        </div>
+
+                        <!-- Botão de Enviar -->
+                        <div class="row">
+                            <div class="col s6">
+                                <button type="submit" class="waves-effect waves-light btn-large orange">EDITAR</button>
+                            </div>
+                            <div class="col s6 modal-footer">
+                                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Fechar</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+    </main>
+
+    <footer class="page-footer orange darken-4">
+        <div class="container center orange darken-4">
+            <p class="text-information">
+                © 2024 LV Soluções Tecnológicas. Todos os direitos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/localStorage.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.modal');
+            var instances = M.Modal.init(elems, {});
+        });
+
+        window.onload = async function () {
+            try {
+                const produtos = await getLocalStorage();
+                // Use os produtos carregados como necessário
+                console.log(produtos);
+            } catch (error) {
+                console.error("Erro ao carregar produtos:", error);
+            }
+
+            listarClientes();
+        };
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.modal');
+            M.Modal.init(elems, {});
+        });
+
+
+
+    </script>
+
+</body>
+
+</html>
