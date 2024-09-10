@@ -8,35 +8,74 @@
     <!-- Link para o Materialize CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
     <!-- Seu estilo personalizado -->
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="/css/custom.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
-    <nav>
-        <div class="container">
-            <div class="row">
-                <div class="nav-wrapper">
-                    <!-- Ícone à esquerda -->
-                    <div href="#" class="col s12 m4 l2">
-                        <i class="material-icons">Icone</i>
-                    </div>
 
-                    <!-- Logo ao centro -->
-                    <div class="col s12 m4 l8 center-align"><img src="/img/logo.jpg" alt="" class="responsive-img"
-                            style="max-width: 20%;"></div>
-                    <!-- Botões à direita -->
-                    <ul id="nav-mobile" class="col s12 m4 l2 right-align">
-                        <li><a href="#!" class="hide-med">Finalizar Pedido</a></li>
-                        <li><a href="#!">Voltar ao Menu</a></li>
-                    </ul>
+    <header>
+        <nav class="navegation white">
+            <div class="row">
+                <div class="col s4"></div>
+                <div class="col s12 center"><img src="/img/logo.jpg" style="width: 200px; margin-top: 30px;" alt="Logo">
                 </div>
+                <div class="col s4 center hide" style="margin-top: 40px;"><a
+                        class="waves-effect waves-light btn-small orange darken-3">Button</a></div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
     <main>
-        <div></div>
+        <div class="container main-container">
+            <div class="row">
+                <div class="col s12 m4 l4 center" id="btns-home">
+                    <a href="#">
+                        <p><i class="large material-icons custom-icon">grading</i></p>
+                    </a>
+                    <a class="waves-effect waves-light btn-small orange-text text-darken-4 btn-at-home">NOVO PEDIDO</a>
+                </div>
+                <div class="col s12 m4 l4 center" id="btns-home">
+                    <a href="#">
+                        <p><i class="large material-icons custom-icon">groups</i></p>
+                    </a>
+                    <a class="waves-effect waves-light btn-small orange-text text-darken-4 btn-at-home">CLIENTES</a>
+                </div>
+                <div class="col s12 m4 l4 center" id="btns-home">
+                    <a href="#">
+                        <p><i class="large material-icons custom-icon">shelves</i></p>
+                    </a>
+                    <a class="waves-effect waves-light btn-small orange-text text-darken-4 btn-at-home">PRODUTOS</a>
+                </div>
+            </div>
+            <div class="row footer-content">
+                <div class="col s12 m2 l2"></div>
+                <div class="col s12 m4 l4 center" id="btns-home">
+                    <a href="#">
+                        <p><i class="large material-icons custom-icon">currency_exchange</i></p>
+                    </a>
+                    <a class="waves-effect waves-light btn-small orange-text text-darken-4 btn-at-home">BALANÇO
+                        DIÁRIO</a>
+                </div>
+                <div class="col s12 m4 l4 center" id="btns-home">
+                    <a href="#">
+                        <p><i class="large material-icons custom-icon">history</i></p>
+                    </a>
+                    <a class="waves-effect waves-light btn-small orange-text text-darken-4 btn-at-home">HISTÓRICO DE
+                        VENDAS</a>
+                </div>
+                <div class="col s12 m2 l2"></div>
+            </div>
+        </div>
     </main>
+
+    <footer class="page-footer orange darken-4">
+        <div class="container center orange darken-4">
+            <p class="text-information">
+                © 2024 LV Soluções Tecnológicas. Todos os direitos reservados.
+            </p>
+        </div>
+    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>

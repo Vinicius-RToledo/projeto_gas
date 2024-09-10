@@ -1,0 +1,56 @@
+:root {
+    --cor-primaria: white;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    background-color: #f77307;
+}
+
+main {
+    flex: 1 0 auto;
+    margin-top: 5%;
+}
+
+@media (max-width: 884px) {
+    main {
+        margin-top: 200px;
+    }
+}
+
+@media (max-width: 390px) {
+    main {
+        margin-top: 5%;
+        margin-bottom: 5%;
+    }
+}
+
+/*Ajuste da altura barra de navegação*/
+.navegation {
+    height: 150px;
+}
+
+/*Ajuste da altura barra rodapé*/
+.text-information {
+    font-size: medium;
+    padding-bottom: 5px;
+}
+
+.custom-icon {
+    color: var(--cor-primaria);
+}
+
+.btn-at-home {
+    width: 200px;
+    background-color: var(--cor-primaria) !important;
+    transition: background-color 0.1s, color 0.1s;
+}
+
+
+/* Customizando o botão */
+#btns-home:hover {
+    --cor-primaria: #0301fa;
+    transition: background-color 0.1s, color 0.1s;
+}
