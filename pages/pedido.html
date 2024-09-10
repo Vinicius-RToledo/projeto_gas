@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RC Gás e Água - Produtos</title>
+    <!-- Link para o Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <!-- Seu estilo personalizado -->
+    <link rel="stylesheet" href="/css/custom.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        @media (max-width: 2000px) {
+            main {
+                position: relative;
+                /* Ou relative, se preferir */
+                top: 0;
+                left: 0;
+                z-index: 1000;
+                margin-top: 0px;
+            }
+        }
+
+        @media (max-width: 885px) {
+            main {
+                margin-top: 100px;
+            }
+
+            .navegation {
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .navegation {
+                height: 300px;
+            }
+
+            main {
+                margin-top: 0px;
+                margin-bottom: 5%;
+            }
+
+            .main-container {
+                margin-top: 10px;
+            }
+
+        }
+
+        .card {
+            width: 200px;
+            /* Defina a largura desejada */
+            height: max-content;
+            /* A altura se ajusta ao conteúdo */
+        }
+
+        .description,
+        .price {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navegation white">
+            <div class="row header-container">
+                <div class="col m4 l5 center div-icon-header">
+                    <div class="icon-container">
+                        <a>
+                            <p><img class="icone-header" src="/icons/grading.png" alt="icone"></p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col s12 m4 l2 center"><img src="/img/logo.jpg" style="width: 200px; margin-top: 30px;"
+                        alt="Logo">
+                </div>
+
+                <div class="col s12 m4 l5 center div-botao-voltar">
+                    <a href="/pages/index.html" class="btn-voltar btn-small col s6 offset-s3">Voltar</a>
+                    <div class="row"></div>
+                    <button class="btn-voltar btn-small col s6 offset-s3" type="submit" name="action">FINALIZAR
+                        PEDIDO</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container main-container">
+            <div class="row">
+                <div class="col s12 m7">
+                    <div class="card">
+                        <div class="card-image">
+                            <img class="responsive-img" src="/img/galao.png">
+                        </div>
+                        <div class="card-content center">
+                            <p class="description">ÁGUA GALÃO 20 LITROS</p>
+                            <div class="row"></div>
+                            <p class="price">R$9,00</p>
+                        </div>
+                        <div class="card-action center">
+                            <div class="row"> <!-- Adicionando uma nova row para organizar os elementos -->
+                                <div class="col s4">
+                                    <a class="btn-floating btn-medium">
+                                        <i class="material-icons btn-action-card">remove</i>
+                                    </a>
+                                </div>
+                                <div class="col s4">
+                                    <span id="quantity" style="font-size: 1.5rem;">0</span> <!-- Quantidade -->
+                                </div>
+                                <div class="col s4">
+                                    <a class="btn-floating btn-medium">
+                                        <i class="material-icons btn-action-card">add</i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="page-footer orange darken-4">
+        <div class="container center orange darken-4">
+            <p class="text-information">
+                © 2024 LV Soluções Tecnológicas. Todos os direitos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="/js/localStorage.js">
+        getLocalStorage("produtos");
+        getLocalStorage("clientes");
+    </script>
+</body>
+
+</html>

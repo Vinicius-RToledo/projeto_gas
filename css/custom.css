@@ -19,11 +19,22 @@ main {
     main {
         margin-top: 180px;
     }
+
     .navegation {
         height: 150px;
     }
+
     .div-botao-voltar {
         margin-top: 45px;
+    }
+
+    .icone-header {
+        width: 100px;
+        height: 100px;
+    }
+
+    .div-icon-header {
+        margin-top: 10px;
     }
 }
 
@@ -31,37 +42,50 @@ main {
     main {
         margin-top: 300px;
     }
+
     .navegation {
         height: 150px;
     }
+
     .div-botao-voltar {
         margin-top: 40px;
     }
 }
 
 @media (max-width: 430px) {
-    
+
     main {
         margin-top: 5%;
         margin-bottom: 5%;
     }
 
     .navbar-fixed {
-        position: fixed; /* Ou relative, se preferir */
+        position: fixed;
+        /* Ou relative, se preferir */
         top: 0;
         left: 0;
         width: 100%;
-        z-index: 1000; /* Ajuste o valor se necessário */
-      }
-      
-      .main-container {
-        margin-top: 180px; /* Ajuste o valor para garantir que o conteúdo não fique escondido */
-      }
-      .div-botao-voltar {
+        z-index: 1000;
+        /* Ajuste o valor se necessário */
+    }
+
+    .main-container {
+        margin-top: 180px;
+        /* Ajuste o valor para garantir que o conteúdo não fique escondido */
+    }
+
+    .div-botao-voltar {
         margin-top: 15px;
     }
 
-    
+    .div-icon-header {
+        display: none;
+    }
+
+    .btn-voltar {
+        height: max-content;
+    }
+
 }
 
 
@@ -81,14 +105,24 @@ main {
     transition: background-color 0.1s, color 0.1s;
 }
 
-.btn-new-client, .btn-voltar {
+.btn-new-client,
+.btn-voltar {
     font-size: 16px;
     width: 200px;
     background-color: #ef6c00;
     transition: background-color 0.1s, color 0.1s;
+    font-weight: bold;
 }
 
-.btn-new-client:hover, .btn-voltar:hover {
+.btn-action-card {
+    background-color: #ef6c00;
+    transition: background-color 0.1s, color 0.1s;
+    font-weight: bold;
+}
+
+.btn-new-client:hover,
+.btn-voltar:hover,
+.btn-action-card:hover {
     background-color: #0301fa;
     color: #ef6c00;
     transition: background-color 0.1s, color 0.1s;
@@ -110,7 +144,7 @@ main {
 
 .client-icon {
     color: var(--cor-secundaria);
-    
+
 }
 
 .table-icons:hover {
