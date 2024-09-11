@@ -31,19 +31,51 @@
             .navegation {
                 height: 150px;
             }
+            #search {
+                text-align: center;
+                font-size: 12px;
+            }
+            .label-icon {
+                display: none;
+            }
         }
 
         @media (max-width: 430px) {
             .navegation {
-                height: 250px;
+                height: 300px;
             }
+
             main {
                 margin-top: 0px;
                 margin-bottom: 5%;
             }
+
             .main-container {
                 margin-top: 10px;
             }
+
+            .div-botao-voltar {
+                margin-top: 0;
+            }
+
+            #search {
+                text-align: center;
+                font-size: 12px;
+            }
+
+            .label-icon {
+                display: none;
+            }
+
+        }
+
+        .div-botao-voltar {
+            margin-top: 20px;
+        }
+
+        #search {
+            text-align: center;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -52,14 +84,33 @@
 
     <header>
         <nav class="navegation white">
-            <div class="row">
-                <div class="col m4 l5"></div>
+            <div class="row header-container">
+                <div class="col m4 l5 center div-icon-header">
+                    <div class="icon-container">
+                        <a>
+                            <p><img class="icone-header" src="/icons/groups.png" alt="icone"></p>
+                        </a>
+                    </div>
+                </div>
                 <div class="col s12 m4 l2 center"><img src="/img/logo.jpg" style="width: 200px; margin-top: 30px;"
                         alt="Logo">
                 </div>
 
-                <div class="col s12 m4 l5 center div-botao-voltar"><a href="/pages/index.html"
-                        class="btn-voltar btn-small">Voltar</a>
+                <div class="col s12 m4 l5 center div-botao-voltar">
+                    <div class="row center">
+                        <div class="col s3"></div>
+                        <div class="col s6">
+                            <form>
+                                <div class="input-field input-pequisar">
+                                    <input id="search" type="search" required placeholder="Pesquisar Cliente...">
+                                    <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                                    <i class="material-icons">close</i>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col s3"></div>
+                    </div>
+                    <a href="/pages/index.html" class="btn-voltar btn-small col s6 offset-s3">Voltar</a>
                 </div>
             </div>
         </nav>
@@ -77,10 +128,10 @@
                 <thead>
                     <tr>
                         <th>ID Cliente</th>
-                        <th>Nome Cliente</th>
-                        <th>Telefone Cliente</th>
-                        <th>Rua Cliente</th>
-                        <th>Número Cliente</th>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>Rua</th>
+                        <th>Número Residencial</th>
                         <th>Ações</th>
                     </tr>
                 </thead>

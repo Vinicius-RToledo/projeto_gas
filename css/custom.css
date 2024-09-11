@@ -159,3 +159,7 @@ main {
     height: 200px; /* A imagem preenche a altura do contêiner */
     object-fit: cover; /* Ajusta a imagem para preencher o espaço sem distorcer */
 }
+
+.input-pequisar {
+    background-color: #ef6c00;
+}
