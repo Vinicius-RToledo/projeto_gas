@@ -10,6 +10,7 @@
     <!-- Seu estilo personalizado -->
     <link rel="stylesheet" href="/css/custom.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="/js/vendas.js"></script>
     <style>
         @media (max-width: 2000px) {
             main {
@@ -81,7 +82,8 @@
                 <div class="col s12 m4 l5 center div-botao-voltar">
                     <a href="/pages/index.html" class="btn-voltar btn-small col s6 offset-s3">Voltar</a>
                     <div class="row"></div>
-                    <button class="btn-voltar btn-small col s6 offset-s3" type="submit" name="action">FINALIZAR
+                    <button id="btn-finalizar" class="btn-voltar btn-small col s6 offset-s3" type="submit"
+                        name="action">FINALIZAR
                         PEDIDO</button>
                 </div>
             </div>
@@ -90,39 +92,45 @@
 
     <main>
         <div class="container main-container">
-            <div class="row">
-                <div class="col s12 m7">
-                    <div class="card">
-                        <div class="card-image">
-                            <img class="responsive-img" src="/img/galao.png">
-                        </div>
-                        <div class="card-content center">
-                            <p class="description">ÁGUA GALÃO 20 LITROS</p>
-                            <div class="row"></div>
-                            <p class="price">R$9,00</p>
-                        </div>
-                        <div class="card-action center">
-                            <div class="row"> <!-- Adicionando uma nova row para organizar os elementos -->
-                                <div class="col s4">
-                                    <a class="btn-floating btn-medium">
-                                        <i class="material-icons btn-action-card">remove</i>
-                                    </a>
-                                </div>
-                                <div class="col s4">
-                                    <span id="quantity" style="font-size: 1.5rem;">0</span> <!-- Quantidade -->
-                                </div>
-                                <div class="col s4">
-                                    <a class="btn-floating btn-medium">
-                                        <i class="material-icons btn-action-card">add</i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+            <!-- Contêiner de produtos -->
+            <div id="produtos-container" class="produtos-container"></div>
+
+            <script>
+                gerarHTMLProdutos();
+            </script>
+        </div>
+
+        <!-- Modal Estrutura -->
+        <div id="modal-finalizar" class="modal">
+            <div class="modal-content">
+                <h4>Resumo do Pedido</h4>
+                <ul id="cart-items" class="collection"></ul>
+                <h5>Subtotal dos itens: R$<span id="subtotal">0.00</span></h5>
+                <h5>Dados do Cliente</h5>
+                <form id="cliente-form">
+                    <div class="input-field">
+                        <input id="nome" type="text" class="validate">
+                        <label for="nome">Nome</label>
                     </div>
-                </div>
+                    <div class="input-field">
+                        <input id="email" type="email" class="validate">
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="input-field">
+                        <input id="telefone" type="tel" class="validate">
+                        <label for="telefone">Telefone</label>
+                    </div>
+                    <button class="btn orange darken-4" type="submit">Confirmar Pedido</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Fechar</a>
             </div>
         </div>
+
+
     </main>
+
 
     <footer class="page-footer orange darken-4">
         <div class="container center orange darken-4">
@@ -137,6 +145,58 @@
         getLocalStorage("produtos");
         getLocalStorage("clientes");
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Inicializa a modal
+            var elems = document.querySelectorAll('.modal');
+            M.Modal.init(elems, {});
+
+            // Adiciona o evento de clique ao botão FINALIZAR PEDIDO
+            const btnFinalizar = document.getElementById('btn-finalizar');
+            if (btnFinalizar) {
+                btnFinalizar.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    // Preenche a modal com os produtos do carrinho
+                    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    const produtos = JSON.parse(localStorage.getItem('produtos')) || [];
+                    const cartItemsList = document.getElementById('cart-items');
+                    const subtotalElement = document.getElementById('subtotal');
+
+                    let subtotal = 0;
+                    cartItemsList.innerHTML = ''; // Limpa a lista existente
+
+                    cart.forEach(item => {
+                        // Encontra o produto correspondente
+                        const produto = produtos.find(p => p.id_produto === item.produto.id_produto);
+                        if (produto) {
+                            const valorUnitario = produto.preco_produto;
+                            const valorTotal = valorUnitario * item.quantidade_cart;
+                            subtotal += valorTotal;
+
+                            const listItem = document.createElement('li');
+                            listItem.className = 'collection-item';
+                            listItem.innerHTML = `
+                                ${produto.desc_produto} - 
+                                R$${valorUnitario.toFixed(2)} x ${item.quantidade_cart} = R$${valorTotal.toFixed(2)}
+                            `;
+                            cartItemsList.appendChild(listItem);
+                        }
+                    });
+
+                    // Atualiza o subtotal na modal
+                    subtotalElement.textContent = subtotal.toFixed(2);
+
+                    // Inicializa e abre a modal
+                    var modalInstance = M.Modal.getInstance(document.getElementById('modal-finalizar'));
+                    modalInstance.open();
+                });
+            } else {
+                console.error('Botão FINALIZAR PEDIDO não encontrado.');
+            }
+        });
+    </script>
+
 </body>
 
 </html>
