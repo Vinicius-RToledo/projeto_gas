@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RC Gás e Água - Produtos</title>
+    <!-- Link para o Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <!-- Seu estilo personalizado -->
+    <link rel="stylesheet" href="/css/custom.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        @media (max-width: 2000px) {
+            main {
+                position: relative;
+                /* Ou relative, se preferir */
+                top: 0;
+                left: 0;
+                z-index: 1000;
+                margin-top: 0px;
+            }
+        }
+
+        @media (max-width: 885px) {
+            main {
+                margin-top: 100px;
+            }
+
+            .navegation {
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .navegation {
+                height: 250px;
+            }
+
+            main {
+                margin-top: 0px;
+                margin-bottom: 5%;
+            }
+
+            .main-container {
+                margin-top: 20px;
+            }
+
+            .btn-imp-balanco {
+                display: none;
+            }
+
+        }
+
+        .tabs .indicator {
+            background-color: #EF6C00;
+            height: 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navegation white">
+            <div class="row header-container">
+                <div class="col m4 l5 center div-icon-header">
+                    <div class="icon-container">
+                        <a>
+                            <p><img class="icone-header" src="/icons/currency_exchange.png" alt="icone"></p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col s12 m4 l2 center"><img src="/img/logo.jpg" style="width: 200px; margin-top: 30px;"
+                        alt="Logo">
+                </div>
+
+                <div class="col s12 m4 l5 center div-botao-voltar">
+                    <a href="/pages/index.html" class="btn-voltar btn-small">Voltar</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class=" row container main-container">
+
+            <div class="row center">
+                <ul id="tabs-swipe-demo" class="tabs">
+                    <li class="tab col s6"><a class="orange-text text-darken-3 grey lighten-2"
+                            href="#test-swipe-1">Balanço Diário</a></li>
+                    <li class="tab col s6"><a class="active orange-text text-darken-3 grey lighten-2"
+                            href="#test-swipe-2">Balanço Parcial</a></li>
+                </ul>
+                <div id="test-swipe-1" class="col s12">
+                    <div class="row tabela-balanco">
+                        <table class="white centered centered responsive-table table-layout-fixed">
+                            <thead>
+                                <tr>
+                                    <th>Código Venda</th>
+                                    <th>Nome</th>
+                                    <th>Data</th>
+                                    <th>Hora</th>
+                                    <th>Descrição</th>
+                                    <th>Telefone</th>
+                                    <th>Valor Total</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="dados-api">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="test-swipe-2" class="col s12">
+                    <div class="row tabela-balanco">
+                        <table class="white centered centered responsive-table table-layout-fixed">
+                            <thead>
+                                <tr>
+                                    <th>Venda Entregas</th>
+                                    <th>Venda Loja</th>
+                                    <th>Valor Parcial</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="dados-api">
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row center-align">
+                        <div class="col s12">
+                            <a href="#!" class="btn-small btn-imp-balanco" data-target="imprimir-balanco">IMPRIMIR
+                                BALANÇO</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="page-footer orange darken-4">
+        <div class="container center orange darken-4">
+            <p class="text-information">
+                © 2024 LV Soluções Tecnológicas. Todos os direitos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var el = document.querySelector('#tabs-swipe-demo');
+            var instance = M.Tabs.init(el, {});
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="/js/localStorage.js">
+        getLocalStorage("produtos");
+        getLocalStorage("clientes");
+    </script>
+</body>
+
+</html>
