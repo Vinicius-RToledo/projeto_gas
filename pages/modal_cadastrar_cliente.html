@@ -1,0 +1,53 @@
+<!-- Modal Cadastrar Cliente -->
+<div id="cadastrar-cliente" class="modal">
+    <div class="modal-content">
+        <h4>Cadastrar Cliente</h4>
+        <form id="cadastrar-cliente-form" onsubmit="cadastrarCliente(); return false;" class="col s12">
+            <!-- Campo ID (oculto) -->
+            <div class="input-field col s12" style="display: none;">
+                <input id="id_cliente" name="id_cliente" type="text" class="validate">
+                <label class="active" for="id">ID do Cliente</label>
+            </div>
+
+            <!-- Campo Nome -->
+            <div class="input-field col s6">
+                <input id="nome_cliente" name="nome_cliente" type="text" class="validate" required>
+                <label class="active" for="nome">Nome</label>
+            </div>
+
+            <!-- Campo Telefone -->
+            <div class="input-field col s6">
+                <input id="telefone_cliente" name="telefone_cliente" type="text" class="validate">
+                <label class="active" for="telefone">Telefone</label>
+            </div>
+
+            <!-- Campo Rua -->
+            <div class="input-field col s6">
+                <input id="rua_cliente" name="rua_cliente" type="text" class="validate">
+                <label class="active" for="rua">Rua</label>
+            </div>
+
+            <!-- Campo Número -->
+            <div class="input-field col s6">
+                <input id="numero_cliente" name="numero_cliente" type="text" class="validate">
+                <label class="active" for="numero">Número</label>
+            </div>
+
+            <!-- Campo ID Bairro -->
+            <div class="input-field col s6">
+                <input id="id_bairro" name="id_bairro" type="number" class="validate">
+                <label class="active" for="id_bairro">ID do Bairro</label>
+            </div>
+
+            <!-- Botão de Enviar -->
+            <div class="row">
+                <div class="col s6">
+                    <button type="submit" class="waves-effect waves-light btn-large orange">CADASTRAR</button>
+                </div>
+                <div class="col s6 modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Fechar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

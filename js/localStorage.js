@@ -36,9 +36,13 @@ function setLocalStorage() {
     ];
     
     const clientes = [
-        { id_cliente: 7, nome_cliente: 'amanda', telefone_cliente: '31991882338', rua_cliente: 'Cícero Lamartine', numero_cliente: '618' },
-        { id_cliente: 8, nome_cliente: 'amanda', telefone_cliente: '31991882338', rua_cliente: 'Cícero Lamartine', numero_cliente: '618' },
-        { id_cliente: 9, nome_cliente: 'joaa', telefone_cliente: '44433', rua_cliente: 'ffdfd', numero_cliente: '3' }
+        { id_cliente: 7, nome_cliente: 'amanda', telefone_cliente: '31991882338', rua_cliente: 'Cícero Lamartine', numero_cliente: '618', id_bairro: 1 },
+        { id_cliente: 8, nome_cliente: 'amanda', telefone_cliente: '31991882338', rua_cliente: 'Cícero Lamartine', numero_cliente: '618', id_bairro: 1 },
+        { id_cliente: 9, nome_cliente: 'joaa', telefone_cliente: '44433', rua_cliente: 'ffdfd', numero_cliente: '3', id_bairro: 1 }
+    ];
+
+    const bairros = [
+        { id_bairro: 1, nome_bairro: "cruzeiro", frete_bairro: "5"}
     ];
 
     const cart = [];
@@ -47,6 +51,7 @@ function setLocalStorage() {
     localStorage.setItem('produtos', JSON.stringify(produtos));
     localStorage.setItem('clientes', JSON.stringify(clientes));
     localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem('bairros', JSON.stringify(bairros));
 }
 
 // Chama a função para garantir que os dados estejam no localStorage

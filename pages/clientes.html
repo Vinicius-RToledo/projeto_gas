@@ -31,10 +31,12 @@
             .navegation {
                 height: 150px;
             }
+
             #search {
                 text-align: center;
                 font-size: 12px;
             }
+
             .label-icon {
                 display: none;
             }
@@ -132,6 +134,7 @@
                         <th>Telefone</th>
                         <th>Rua</th>
                         <th>Número Residencial</th>
+                        <th>Bairro</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -141,12 +144,31 @@
                 </tbody>
             </table>
 
+            <div id="modal-cadastrar"> </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const modalContainer = document.getElementById('modal-cadastrar');
+
+                    fetch('modal_cadastrar_cliente.html')
+                        .then(response => response.text())
+                        .then(data => {
+                            modalContainer.innerHTML = data;
+
+                            // Inicializar a modal após carregá-la
+                            const elems = document.querySelectorAll('.modal');
+                            M.Modal.init(elems);
+                        })
+                        .catch(error => console.error('Erro ao carregar o modal:', error));
+                });
+            </script>
 
             <!-- Botão Novo Cliente-->
             <div class="row"></div>
             <div class="row center-align">
                 <div class="col s12">
-                    <a href="cadastrarProduto.html" class="btn-small btn-new-client">NOVO CLIENTE</a>
+                    <a href="#!" class="btn-small btn-new-client modal-trigger" data-target="cadastrar-cliente">NOVO
+                        CLIENTE</a>
+
                 </div>
             </div>
             <!-- Modal Editar -->
@@ -189,6 +211,12 @@
                                 <input id="numero" name="numero_cliente" type="text" class="validate" required>
                                 <label class="active" for="numero">Número</label>
                             </div>
+
+                            <!-- Campo Bairro -->
+                            <div class="input-field col s6">
+                                <input id="bairro" name="id_bairro" type="text" class="validate" required>
+                                <label class="active" for="bairro">Bairro</label>
+                            </div>
                         </div>
 
                         <!-- Botão de Enviar -->
@@ -225,9 +253,9 @@
 
         window.onload = async function () {
             try {
-                const produtos = await getLocalStorage();
+                const clientes = await getLocalStorage();
                 // Use os produtos carregados como necessário
-                console.log(produtos);
+                console.log(clientes);
             } catch (error) {
                 console.error("Erro ao carregar produtos:", error);
             }

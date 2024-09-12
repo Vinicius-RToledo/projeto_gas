@@ -43,39 +43,46 @@ function listar_produto(){
         divAcoes.className = 'icon-actions';
 
         // Botão de Editar com ícone
-        const btnEditar = document.createElement('button');
-        btnEditar.className = '.button-produto modal-trigger';
+        const btnEditar = document.createElement('a');
+        btnEditar.className = '  table-icons waves-effect waves-light btn-small modal-trigger'; // Classes do Materialize CSS
+        btnEditar.id = "btns-home";
         btnEditar.setAttribute('data-target', 'editar-produto'); // Define o ID do modal
         btnEditar.onclick = () => {
-            editarProduto(item.id_produto);
-        };
-        const imgEditar = document.createElement('img');
-        imgEditar.src = '../icons/icons8-editar-30.png'; // Caminho para o ícone de editar
-        imgEditar.alt = 'Editar';
-        btnEditar.appendChild(imgEditar);
+            editarProduto(item.id_produto); // Chama a função de edição com o ID do cliente
+        };        
+
+        // Cria o ícone de editar do Materialize
+        const iconEditar = document.createElement('i');
+        iconEditar.className = 'material-icons client-icon'; // Classe do Material Icons
+        iconEditar.textContent = 'edit'; // Nome do ícone
+
+        // Adiciona o ícone ao link
+        btnEditar.appendChild(iconEditar);
+
+        // Adiciona o link ao container de ações
         divAcoes.appendChild(btnEditar);
 
         // Botão de Excluir com ícone
-        const btnRemover = document.createElement('button');
-        btnRemover.className = '.button-produto';
+        const btnRemover = document.createElement('a');
+        btnRemover.id = "btns-home";
+        btnRemover.className = ' table-icons waves-effect waves-light btn-small'; // Classes do Materialize CSS
         btnRemover.onclick = () => deletarProduto(item.id_produto); // Define o evento onclick
-        const imgRemover = document.createElement('img');
-        imgRemover.src = '../icons/icons8-remover-30.png'; // Caminho para o ícone de remover
-        imgRemover.alt = 'Excluir';
-        btnRemover.appendChild(imgRemover);
+
+        // Cria o ícone de remover do Materialize
+        const iconRemover = document.createElement('i');
+        iconRemover.className = 'material-icons client-icon'; // Classe do Material Icons
+        iconRemover.textContent = 'delete'; // Nome do ícone
+
+        // Adiciona o ícone ao link
+        btnRemover.appendChild(iconRemover);
+
+        // Adiciona o link ao container de ações
         divAcoes.appendChild(btnRemover);
 
-        // Botão de Adicionar com ícone
-        const btnAdicionar = document.createElement('button');
-        btnAdicionar.className = '.button-produto';
-        btnAdicionar.onclick = () => adicionarProduto(item.id); // Define o evento onclick
-        const imgAdicionar = document.createElement('img');
-        imgAdicionar.src = '../icons/icons8-adicionar-24.png'; // Caminho para o ícone de adicionar
-        imgAdicionar.alt = 'Adicionar';
-        btnAdicionar.appendChild(imgAdicionar);
-        divAcoes.appendChild(btnAdicionar);
-
+        // Adiciona o container de ações à célula
         cellAcoes.appendChild(divAcoes);
+
+        // Adiciona a célula de ações à linha da tabela
         row.appendChild(cellAcoes);
 
         // Adiciona a linha criada ao corpo da tabela
@@ -226,3 +233,64 @@ function editarProduto(id_produto){
 });
         
 }
+
+function deletarProduto(idProduto) {
+    // Obter a lista de produtos do localStorage
+    let produtos = JSON.parse(localStorage.getItem('produtos')) || [];
+
+    // Filtrar a lista de produtos para remover o produto específico
+    produtos = produtos.filter(produto => produto.id_produto !== idProduto);
+
+    // Atualizar o localStorage com a nova lista de produtos
+    localStorage.setItem('produtos', JSON.stringify(produtos));
+
+    // Remover o elemento da tabela na interface
+    const row = document.getElementById(`produto-${idProduto}`);
+    if (row) {
+        row.remove();
+    }
+
+    // Exibir mensagem de confirmação
+    console.log(`Produto com ID ${idProduto} deletado.`);
+
+    location.reload();
+}
+
+function cadastrarProduto() {
+        // Obtendo os valores dos campos
+        const id_produto = parseInt(document.getElementById('id_produto').value) || Date.now(); // Gera um ID único se não estiver definido
+        const nome_produto = document.getElementById('nome_produto').value;
+        const desc_produto = document.getElementById('descricao_produto').value;
+        const preco_produto = parseFloat(document.getElementById('valor-unitario_produto').value);
+        const imagem_produto = document.getElementById('imagem_produto').value;
+        const quantidade_disponivel = parseInt(document.getElementById('quantidade_produto').value);
+        const nivel_abastecimento = parseInt(document.getElementById('nivel-abastecimento_produto').value);
+
+        // Criar um objeto de produto
+        const produto = {
+            id_produto,
+            nome_produto,
+            desc_produto,
+            preco_produto,
+            imagem_produto,
+            quantidade_disponivel,
+            nivel_abastecimento
+        };
+
+        // Recuperar produtos existentes do localStorage
+        let produtos = JSON.parse(localStorage.getItem('produtos')) || [];
+
+        // Adicionar o novo produto
+        produtos.push(produto);
+
+        // Atualizar o localStorage
+        localStorage.setItem('produtos', JSON.stringify(produtos));
+
+        // Limpar o formulário após o cadastro
+        document.getElementById('produto-form').reset();
+
+        console.log("Produto cadastrado:", produto);
+}
+
+
+

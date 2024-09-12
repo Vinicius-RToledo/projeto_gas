@@ -1,0 +1,70 @@
+<!-- Modal Cadastrar Produto -->
+<div id="cadastrar-produto" class="modal">
+    <div class="modal-content">
+        <h4>Cadastrar Produto</h4>
+        <form id="cadastrar-produto-form" onsubmit="cadastrarProduto(); return false;" class="col s12">
+            <!-- Primeira linha de inputs -->
+            <div class="row">
+                <!-- Campo ID (oculto) -->
+                <div class="input-field col s12" style="display: none;">
+                    <input id="id_produto" name="id_produto" type="text" class="validate">
+                    <label class="active" for="id">ID do Produto</label>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Campo Nome -->
+                <div class="input-field col s6">
+                    <input id="nome_produto" name="nome_produto" type="text" class="validate" required>
+                    <label class="active" for="nome">Nome</label>
+                </div>
+
+                <!-- Campo Descrição -->
+                <div class="input-field col s6">
+                    <input id="descricao_produto" name="desc_produto" type="text" class="validate">
+                    <label class="active" for="descricao">Descrição</label>
+                </div>
+            </div>
+
+            <!-- Segunda linha de inputs -->
+            <div class="row">
+                <!-- Campo Preço -->
+                <div class="input-field col s6">
+                    <input id="valor-unitario_produto" name="preco_produto" type="number" step="0.01" class="validate"
+                        required>
+                    <label class="active" for="valor-unitario">Preço Unitário</label>
+                </div>
+
+                <!-- Campo Imagem -->
+                <div class="input-field col s6">
+                    <input id="imagem_produto" name="imagem_produto" type="text" class="validate">
+                    <label class="active" for="imagem">Imagem</label>
+                </div>
+            </div>
+
+            <!-- Terceira linha de inputs -->
+            <div class="row">
+                <!-- Campo Quantidade -->
+                <div class="input-field col s6">
+                    <input id="quantidade_produto" name="quantidade_disponivel" type="number" class="validate" required>
+                    <label class="active" for="quantidade">Quantidade Disponível</label>
+                </div>
+
+                <!-- Campo Nível de Abastecimento -->
+                <div class="input-field col s6">
+                    <input id="nivel-abastecimento_produto" name="nivel_abastecimento" type="number" class="validate">
+                    <label class="active" for="nivel-abastecimento">Nível de Abastecimento</label>
+                </div>
+            </div>
+
+            <!-- Botão de Enviar -->
+            <div class="row">
+                <div class="col s6">
+                    <button type="submit" class="waves-effect waves-light btn-large orange">CADASTRAR</button>
+                </div>
+                <div class="col s6 modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Fechar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
