@@ -170,3 +170,22 @@ main {
     table-layout: fixed; /* Define layout fixo para a tabela */
     width: 100%; /* Garante que ocupe a largura total */
 }
+
+.flex-container {
+    display: flex; /* Usar Flexbox para alinhar os itens */
+    align-items: center; /* Alinhar verticalmente */
+    gap: 8px; /* Espaço entre o select e o botão */
+}
+
+.select-wrapper {
+    flex-grow: 1; /* Faz o select ocupar o máximo de espaço disponível */
+}
+
+.btn-new-client {
+    display: inline-flex; /* Alinhar o botão corretamente */
+    align-items: center; /* Centralizar o ícone dentro do botão */
+    justify-content: center;
+    margin-left: 8px; /* Espaço à esquerda do botão */
+    width: 30px;
+}
+
