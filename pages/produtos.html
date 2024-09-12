@@ -138,17 +138,7 @@
 
                 </tbody>
                 <script>
-                    window.onload = async function () {
-                        try {
-                            const produtos = await getLocalStorage("produtos");
-                            // Use os produtos carregados como necessário
-                            console.log(produtos);
-                        } catch (error) {
-                            console.error("Erro ao carregar produtos:", error);
-                        }
-
-                        listar_produto();
-                    };
+                    listar_produto();
                 </script>
             </table>
 

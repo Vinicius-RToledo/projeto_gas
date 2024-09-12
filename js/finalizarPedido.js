@@ -85,6 +85,84 @@ function Script_da_modal_finalizar(){
 }
 
 
-function confirmarVenda(){
-    console.log("cheguei aqui");
+function confirmarPedido() {
+
+    // Recuperar as tabelas do localStorage
+    const notas = JSON.parse(localStorage.getItem('nota_venda')) || [];
+    const itens = JSON.parse(localStorage.getItem('item_nota_venda')) || [];
+    const bairros = JSON.parse(localStorage.getItem('bairros')) || [];
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const produtos = JSON.parse(localStorage.getItem('produtos')) || [];
+
+    // Recuperar os dados do cliente selecionado e outros campos
+    const id_cliente = parseInt(document.getElementById('select-cliente').value);
+    const id_bairro = parseInt(document.getElementById('select-bairro').value);
+    const rua_entrega = document.getElementById('rua').value;
+    const numero_entrega = document.getElementById('numero').value;
+    const telefone_cliente = document.getElementById('telefone').value;
+    
+    const bairroSelecionado = bairros.find(bairro => bairro.id_bairro === id_bairro);
+                if (bairroSelecionado) {
+                    frete = bairroSelecionado.frete_bairro;
+                }
+
+
+    let subtotal = 0;
+
+    cart.forEach(item => {
+        // Encontra o produto correspondente
+        const produto = produtos.find(p => p.id_produto === item.produto.id_produto);
+        if (produto) {
+            const valorUnitario = produto.preco_produto;
+            const valorTotal = valorUnitario * item.quantidade_cart;
+            subtotal += valorTotal;
+        }
+    });
+
+    subtotal += parseFloat(frete);
+
+
+    // Criar o objeto nota_venda
+    const novaNotaVenda = {
+        id_nota_venda: notas.length + 1, // Incrementa o ID da nota venda
+        valor_total: parseFloat(subtotal),
+        data_nota_venda: new Date().toISOString().split('T')[0], // Data de hoje no formato 'YYYY-MM-DD'
+        id_cliente: id_cliente,
+        id_bairro: id_bairro,
+        rua_entrega: rua_entrega,
+        numero_entrega: numero_entrega,
+        telefone_cliente: telefone_cliente
+    };
+
+    // Adicionar a nova nota à lista de notas
+    notas.push(novaNotaVenda);
+
+    // Salvar no localStorage
+    localStorage.setItem('nota_venda', JSON.stringify(notas));
+
+
+    // Criar os objetos item_nota_venda associados a esta nota
+    const itensNotaVenda = cart.map((item, index) => {
+        return {
+            id_item_da_nota: index + 1, // Incrementa o ID do item
+            id_nota_venda: novaNotaVenda.id_nota_venda, // Associa ao ID da nota de venda
+            id_produto: item.produto.id_produto,
+            quantidade_item: item.quantidade_cart
+        };
+    });
+    
+
+    // Adicionar os itens da nota à lista existente
+    itens.push(...itensNotaVenda);
+
+    // Salvar os itens da nota no localStorage
+    localStorage.setItem('item_nota_venda', JSON.stringify(itens));
+
+    // Confirmar a ação
+    alert('Pedido confirmado com sucesso!');
+
+    localStorage.removeItem("cart");
+    
+    // Recarregar a página
+    window.location.reload();
 }

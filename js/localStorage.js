@@ -47,11 +47,17 @@ function setLocalStorage() {
 
     const cart = [];
 
+    const nota_venda = [];
+
+    const item_nota_venda = [];
+
     // Define os dados no localStorage
     localStorage.setItem('produtos', JSON.stringify(produtos));
     localStorage.setItem('clientes', JSON.stringify(clientes));
     localStorage.setItem('cart', JSON.stringify(cart));
     localStorage.setItem('bairros', JSON.stringify(bairros));
+    localStorage.setItem('nota_venda', JSON.stringify(nota_venda));
+    localStorage.setItem('item_nota_venda', JSON.stringify(item_nota_venda));
 }
 
 // Chama a função para garantir que os dados estejam no localStorage
