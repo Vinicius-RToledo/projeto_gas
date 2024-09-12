@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/css/custom.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="/js/vendas.js"></script>
+    <script src="/js/CRUD_clientes.js"></script>
+    <script src="/js/finalizarPedido.js"></script>
     <style>
         @media (max-width: 2000px) {
             main {
@@ -68,6 +70,7 @@
             font-weight: bold;
         }
     </style>
+
 </head>
 
 <body>
@@ -98,8 +101,8 @@
     </header>
 
     <main>
+        <!-- Contêiner de produtos -->
         <div class="container main-container">
-            <!-- Contêiner de produtos -->
             <div id="produtos-container" class="produtos-container"></div>
 
             <script>
@@ -107,7 +110,28 @@
             </script>
         </div>
 
-        <!-- Modal Estrutura -->
+        <!-- Contêiner da modal cadastrar -->
+        <div id="modal-cadastrar"> </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const modalContainer = document.getElementById('modal-cadastrar');
+
+                fetch('modal_cadastrar_cliente.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        modalContainer.innerHTML = data;
+
+                        // Inicializar a modal após carregá-la
+                        const elems = document.querySelectorAll('.modal');
+                        M.Modal.init(elems);
+                    })
+                    .catch(error => console.error('Erro ao carregar o modal:', error));
+            });
+        </script>
+
+
+
+        <!-- conteiner Modal Finalizar Pedido Estrutura -->
         <div id="modal-finalizar" class="modal">
             <div class="modal-content">
                 <h4>Resumo do Pedido</h4>
@@ -116,11 +140,20 @@
                 <h5>Dados do Cliente</h5>
                 <form id="cliente-form">
                     <!-- Campo Select de Cliente -->
-                    <div class="input-field">
+                    <div class="input-field flex-container">
                         <select id="select-cliente">
                             <option value="" disabled selected>Selecione um cliente</option>
+                            <!-- Opções serão preenchidas dinamicamente -->
                         </select>
                         <label for="select-cliente">Clientes</label>
+
+
+                        <a href="#!" class="btn-small btn-new-client modal-trigger" data-target="cadastrar-cliente">
+                            <i class="material-icons">add</i>
+                        </a>
+
+
+
                     </div>
 
                     <!-- Campo Select de Bairro -->
@@ -150,7 +183,7 @@
                     </div>
 
                     <!-- Botão de Confirmar Pedido -->
-                    <button class="btn orange darken-4" type="submit">Confirmar Pedido</button>
+                    <button id="" class="btn orange darken-4" type="submit">Confirmar Pedido</button>
                 </form>
             </div>
             <div class="modal-footer">
@@ -159,59 +192,10 @@
         </div>
 
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const clientes = JSON.parse(localStorage.getItem('clientes')) || [];
-                const bairros = JSON.parse(localStorage.getItem('bairros')) || [];
-
-                // Preencher o campo select com clientes do localStorage
-                const selectCliente = document.getElementById('select-cliente');
-                clientes.forEach(cliente => {
-                    const option = document.createElement('option');
-                    option.value = cliente.id_cliente;
-                    option.textContent = cliente.nome_cliente;
-                    selectCliente.appendChild(option);
-                });
-                M.FormSelect.init(selectCliente); // Inicializar o select do Materialize
-
-                // Preencher o campo select de bairros do localStorage
-                const selectBairro = document.getElementById('select-bairro');
-                bairros.forEach(bairro => {
-                    const option = document.createElement('option');
-                    option.value = bairro.id_bairro;
-                    option.textContent = `${bairro.nome_bairro} - Frete: R$${bairro.frete_bairro}`;
-                    selectBairro.appendChild(option);
-                });
-                M.FormSelect.init(selectBairro); // Inicializar o select do Materialize
-
-                // Evento para preencher o formulário ao selecionar um cliente
-                selectCliente.addEventListener('change', function () {
-                    const clienteSelecionado = clientes.find(cliente => parseInt(cliente.id_cliente) === parseInt(this.value));
-                    console.log("Cliente selecionado:", clienteSelecionado);
-
-                    if (clienteSelecionado) {
-                        document.getElementById('rua').value = clienteSelecionado.rua_cliente || '';
-                        document.getElementById('numero').value = clienteSelecionado.numero_cliente || '';
-                        document.getElementById('telefone').value = clienteSelecionado.telefone_cliente || '';
-
-                        // Encontrar o bairro correspondente ao id_bairro do cliente
-                        const bairroSelecionado = bairros.find(bairro => bairro.id_bairro === clienteSelecionado.id_bairro);
-                        if (bairroSelecionado) {
-                            selectBairro.value = bairroSelecionado.id_bairro;
-                            M.FormSelect.init(selectBairro); // Re-inicializar o select para refletir a seleção
-                        }
-
-                        M.updateTextFields(); // Atualizar os campos do Materialize
-                    }
-                });
-            });
+            Script_da_modal_finalizar();
         </script>
 
-
-
-
-
     </main>
-
 
     <footer class="page-footer orange darken-4">
         <div class="container center orange darken-4">
@@ -226,9 +210,10 @@
         getLocalStorage("produtos");
         getLocalStorage("clientes");
     </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Inicializa a modal
+            // Inicializa as modais presentes no HTML
             var elems = document.querySelectorAll('.modal');
             M.Modal.init(elems, {});
 
@@ -258,9 +243,9 @@
                             const listItem = document.createElement('li');
                             listItem.className = 'collection-item';
                             listItem.innerHTML = `
-                                ${produto.desc_produto} - 
-                                R$${valorUnitario.toFixed(2)} x ${item.quantidade_cart} = R$${valorTotal.toFixed(2)}
-                            `;
+                        ${produto.desc_produto} - 
+                        R$${valorUnitario.toFixed(2)} x ${item.quantidade_cart} = R$${valorTotal.toFixed(2)}
+                    `;
                             cartItemsList.appendChild(listItem);
                         }
                     });
@@ -268,14 +253,19 @@
                     // Atualiza o subtotal na modal
                     subtotalElement.textContent = subtotal.toFixed(2);
 
-                    // Inicializa e abre a modal
-                    var modalInstance = M.Modal.getInstance(document.getElementById('modal-finalizar'));
-                    modalInstance.open();
+                    // Inicializa e abre a modal "Finalizar Pedido"
+                    const modalFinalizar = document.getElementById('modal-finalizar');
+                    const modalInstanceFinalizar = M.Modal.getInstance(modalFinalizar);
+                    modalInstanceFinalizar.open();
                 });
             } else {
                 console.error('Botão FINALIZAR PEDIDO não encontrado.');
             }
+
+
         });
+
+
     </script>
 
 </body>

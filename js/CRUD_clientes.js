@@ -238,6 +238,8 @@ function cadastrarCliente() {
     // Atualizar o localStorage
     localStorage.setItem('clientes', JSON.stringify(clientes));
 
+    M.updateTextFields(); // Atualizar os campos do Materialize
+
     // Limpar o formulário após o cadastro
     document.getElementById('cadastrar-cliente-form').reset();
 

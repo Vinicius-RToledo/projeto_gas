@@ -207,6 +207,3 @@ function atualizarQuantidadeNoHTML(id_produto) {
 }
 
 
-
-
-// Chama a função para gerar o HTML assim que a página carregar

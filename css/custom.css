@@ -163,3 +163,25 @@ main {
 .input-pequisar {
     background-color: #ef6c00;
 }
+
+/* Garantindo que o container flexível se comporte corretamente */
+.flex-container {
+    display: flex;
+    align-items: center; /* Alinha verticalmente ao centro */
+    gap: 10px; /* Espaço entre os elementos, ajuste conforme necessário */
+}
+
+.input-field {
+    width: 100%;
+}
+
+input-field select {
+    flex: 1; /* O select ocupará o espaço restante disponível */
+}
+
+/* Ajustando o ícone para que não sobreponha o select */
+.btn-floating {
+    margin-left: 10px; /* Espaçamento entre o select e o ícone, ajuste conforme necessário */
+    display: flex;
+    align-items: center;
+}
