@@ -140,7 +140,7 @@
                 <script>
                     window.onload = async function () {
                         try {
-                            const produtos = await getLocalStorage();
+                            const produtos = await getLocalStorage("produtos");
                             // Use os produtos carregados como necessário
                             console.log(produtos);
                         } catch (error) {

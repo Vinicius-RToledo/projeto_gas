@@ -287,9 +287,7 @@ function cadastrarProduto() {
         localStorage.setItem('produtos', JSON.stringify(produtos));
 
         // Limpar o formulário após o cadastro
-        document.getElementById('produto-form').reset();
-
-        console.log("Produto cadastrado:", produto);
+        location.reload();
 }
 
 

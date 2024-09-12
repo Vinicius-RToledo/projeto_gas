@@ -243,5 +243,5 @@ function cadastrarCliente() {
     // Limpar o formulário após o cadastro
     document.getElementById('cadastrar-cliente-form').reset();
 
-    console.log("Cliente cadastrado:", cliente);
+    location.reload();
 }
