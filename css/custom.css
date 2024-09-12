@@ -165,3 +165,8 @@ main {
 .input-pequisar {
     background-color: #ef6c00;
 }
+
+.table-layout-fixed {
+    table-layout: fixed; /* Define layout fixo para a tabela */
+    width: 100%; /* Garante que ocupe a largura total */
+}
