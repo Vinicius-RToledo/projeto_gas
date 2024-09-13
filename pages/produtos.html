@@ -122,7 +122,7 @@
         </div>
         <div class=" row container main-container">
 
-            <table class=" white centered centered responsive-table table-layout-fixed">
+            <table id="tabela-produtos" class=" white centered centered responsive-table table-layout-fixed">
                 <thead>
                     <tr>
                         <th>ID Produto</th>
@@ -259,6 +259,39 @@
         </div>
     </footer>
 
+    <!-- Script para a funcionalidade de pesquisa -->
+    <script>
+        // Capturar o campo de pesquisa
+        const searchInput = document.getElementById('search');
+
+        // Adicionar evento de input no campo de pesquisa
+        searchInput.addEventListener('input', function () {
+            const searchTerm = searchInput.value.toLowerCase();
+            const tabela = document.getElementById('tabela-produtos');
+            const linhas = tabela.getElementsByTagName('tr');
+
+            // Loop por todas as linhas da tabela (exceto o cabeçalho)
+            for (let i = 1; i < linhas.length; i++) {
+                const cells = linhas[i].getElementsByTagName('td');
+                let encontrado = false;
+
+                // Verifica se qualquer célula contém o termo de pesquisa
+                for (let j = 0; j < cells.length - 1; j++) {  // Ignorar a coluna "Ações"
+                    if (cells[j] && cells[j].innerText.toLowerCase().includes(searchTerm)) {
+                        encontrado = true;
+                        break;
+                    }
+                }
+
+                // Mostrar ou ocultar a linha com base no resultado da pesquisa
+                if (encontrado) {
+                    linhas[i].style.display = '';
+                } else {
+                    linhas[i].style.display = 'none';
+                }
+            }
+        });
+    </script>
     <script src="/js/materialize.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/js/localStorage.js"></script>
