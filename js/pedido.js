@@ -8,7 +8,7 @@ function gerarHTMLProdutos() {
     let row; // Variável para a linha atual
     row = document.createElement('div'); // Cria uma nova linha
     row.className = 'row center-align'; // Adiciona a classe de linha
-    
+
     produtos.forEach((produto, index) => {
 
         const colunaVazia = document.createElement('div');
@@ -33,7 +33,8 @@ function gerarHTMLProdutos() {
 
         const price = document.createElement('p');
         price.className = 'price';
-        price.textContent = produto.preco_produto;
+        price.textContent = `R$ ${produto.preco_produto.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+
 
         // Montagem do conteúdo do card
         cardContent.appendChild(productImage);
@@ -52,7 +53,7 @@ function gerarHTMLProdutos() {
         colRemove.className = 'col s4';
         const btnRemove = document.createElement('a');
         btnRemove.className = 'btn-floating btn-medium';
-        btnRemove.addEventListener('click', function() {
+        btnRemove.addEventListener('click', function () {
             removerCart(produto.id_produto); // Adiciona o evento de clique
         });
         const iconRemove = document.createElement('i');
@@ -74,7 +75,7 @@ function gerarHTMLProdutos() {
         colAdd.className = 'col s4';
         const btnAdd = document.createElement('a');
         btnAdd.className = 'btn-floating btn-medium';
-        btnAdd.addEventListener('click', function() {
+        btnAdd.addEventListener('click', function () {
             adicionarCart(produto.id_produto); // Adiciona o evento de clique
         });
         const iconAdd = document.createElement('i');
@@ -97,7 +98,7 @@ function gerarHTMLProdutos() {
         row.appendChild(productCard);
         atualizarQuantidadeNoHTML(produto.id_produto);
 
-       
+
     });
 
     container.appendChild(row); // Adiciona a nova linha ao contêiner
@@ -114,11 +115,11 @@ function adicionarCart(id_produto) {
     const produto = produtos.find(item => item.id_produto === id_produto);
 
     console.log(produto);
-    
+
     const itemIndex = cart.findIndex(item => item["produto"].id_produto === id_produto);
     if (itemIndex === -1) {
         // Se o item não estiver no carrinho, adiciona-o
-        cart.push({produto, quantidade_cart: 1 });
+        cart.push({ produto, quantidade_cart: 1 });
     } else {
         // Se o item já estiver no carrinho, aumenta a quantidade
         cart[itemIndex].quantidade_cart += 1;
@@ -127,7 +128,7 @@ function adicionarCart(id_produto) {
     // Salva o carrinho atualizado no localStorage
     localStorage.setItem('cart', JSON.stringify(cart));
     atualizarQuantidadeNoHTML(id_produto);
-    
+
     // Atualiza a interface do usuário (se necessário)
     console.log(`Produto com ID ${id_produto} adicionado ao carrinho.`);
 }
@@ -166,7 +167,7 @@ function removerCart(id_produto) {
 function atualizarQuantidadeNoHTML(id_produto) {
     // Recupera o carrinho do localStorage
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    
+
     // Encontra o item no carrinho
     const item = cart.find(item => item.produto.id_produto === id_produto);
     console.log(item);
