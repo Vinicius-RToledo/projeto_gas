@@ -9,6 +9,7 @@ function listar_produto(){
     // Itera sobre os dados recebidos e cria linhas de tabela
     produtos.forEach(item => {
         const row = document.createElement('tr'); // Cria uma nova linha de tabela
+        row.id = "produto-" + item.id_produto;
 
         // Cria células para cada campo do item
         const cellCodigo = document.createElement('td');
@@ -174,6 +175,8 @@ function editarProduto(id_produto){
         nivel_abastecimento: nivel_abastecimento,
     };
 
+    CRUD_API("produtos", "PUT", id_produto, produtoAtualizado);
+
     //o proximo codigo deve ser removido e o codigo comentado deve voltar quando for conectar com a API
 
     function atualizarLocalStorage() {
@@ -234,27 +237,34 @@ function editarProduto(id_produto){
         
 }
 
-function deletarProduto(idProduto) {
-    // Obter a lista de produtos do localStorage
-    let produtos = JSON.parse(localStorage.getItem('produtos')) || [];
+async function deletarProduto(idProduto) {
+    try {
+        // Chama a API para deletar o produto
+        await CRUD_API("produtos", "DELETE", idProduto);
 
-    // Filtrar a lista de produtos para remover o produto específico
-    produtos = produtos.filter(produto => produto.id_produto !== idProduto);
+        // Obter a lista de produtos do localStorage
+        let produtos = JSON.parse(localStorage.getItem('produtos')) || [];
 
-    // Atualizar o localStorage com a nova lista de produtos
-    localStorage.setItem('produtos', JSON.stringify(produtos));
+        // Filtrar a lista de produtos para remover o produto específico
+        produtos = produtos.filter(produto => produto.id_produto !== idProduto);
 
-    // Remover o elemento da tabela na interface
-    const row = document.getElementById(`produto-${idProduto}`);
-    if (row) {
-        row.remove();
+        // Atualizar o localStorage com a nova lista de produtos
+        localStorage.setItem('produtos', JSON.stringify(produtos));
+
+        // Remover o elemento da tabela na interface
+        const row = document.getElementById(`produto-${idProduto}`);
+        if (row) {
+            row.remove();
+        }
+
+        // Exibir mensagem de sucesso
+        M.toast({html: `Produto com ID ${idProduto} deletado com sucesso!`, classes: 'green'});
+    } catch (error) {
+        // Exibir mensagem de erro
+        M.toast({html: `Erro ao deletar o produto: ${error.message}`, classes: 'red'});
     }
-
-    // Exibir mensagem de confirmação
-    console.log(`Produto com ID ${idProduto} deletado.`);
-
-    location.reload();
 }
+
 
 function cadastrarProduto() {
         // Obtendo os valores dos campos
@@ -277,6 +287,8 @@ function cadastrarProduto() {
             nivel_abastecimento
         };
 
+        CRUD_API("produtos", "POST",null , produto);
+
         // Recuperar produtos existentes do localStorage
         let produtos = JSON.parse(localStorage.getItem('produtos')) || [];
 
@@ -286,8 +298,12 @@ function cadastrarProduto() {
         // Atualizar o localStorage
         localStorage.setItem('produtos', JSON.stringify(produtos));
 
+        M.toast({html: `Produto cadastrado com sucesso!`, classes: 'green'});
+        
+        M.updateTextFields(); // Atualizar os campos do Materialize
+
         // Limpar o formulário após o cadastro
-        location.reload();
+        document.getElementById('cadastrar-produto-form').reset();
 }
 
 

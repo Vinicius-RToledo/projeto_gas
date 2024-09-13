@@ -3,8 +3,10 @@ function listarClientes() {
     const dadosContainer = document.getElementById('dados-api');
 
     clientes = JSON.parse(localStorage.getItem("clientes"));
+    bairros = JSON.parse(localStorage.getItem("bairros"));
                             clientes.forEach(item => {
                                 const row = document.createElement('tr'); // Cria uma nova linha de tabela
+                                row.id = "cliente-" + item.id_cliente;
 
                                 // Cria células para cada campo do item
                                 const cellCodigo = document.createElement('td');
@@ -27,8 +29,14 @@ function listarClientes() {
                                 cellNumero.textContent = item.numero_cliente || 'N/A';
                                 row.appendChild(cellNumero);
 
+
+                                 // BAIRRO
+                                const index = bairros.findIndex(c => c.id_bairro === parseInt(item.id_bairro));
+
+                                bairro = bairros[index];
+
                                 const cellBairro = document.createElement('td');
-                                cellBairro.textContent = item.id_bairro || 'N/A';
+                                cellBairro.textContent = bairro.nome_bairro || 'N/A';
                                 row.appendChild(cellBairro);
 
                                 document.querySelector('tbody').appendChild(row);
@@ -191,34 +199,37 @@ function editarCliente(id_cliente) {
     
 }
 
-function deletarCliente(idCliente) {
-    // Obter a lista de clientes do localStorage
-    let clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+async function deletarCliente(idCliente) {
+    try {
+        // Chama a API para deletar o cliente
+        await CRUD_API("clientes", "DELETE", idCliente);
+        
+        // Obter a lista de clientes do localStorage
+        let clientes = JSON.parse(localStorage.getItem('clientes')) || [];
 
-    // Filtrar a lista de clientes para remover o cliente específico
-    clientes = clientes.filter(cliente => cliente.id_cliente !== idCliente);
+        // Filtrar a lista de clientes para remover o cliente específico
+        clientes = clientes.filter(cliente => cliente.id_cliente !== idCliente);
 
-    // Atualizar o localStorage com a nova lista de clientes
-    localStorage.setItem('clientes', JSON.stringify(clientes));
+        // Atualizar o localStorage com a nova lista de clientes
+        localStorage.setItem('clientes', JSON.stringify(clientes));
 
-    // Remover o elemento da tabela na interface
-    const row = document.getElementById(`cliente-${idCliente}`);
-    if (row) {
-        row.remove();
+        // Remover o elemento da tabela na interface
+        const row = document.getElementById(`cliente-${idCliente}`);
+        if (row) {
+            row.remove();
+        }
+
+        // Exibir mensagem de sucesso
+        M.toast({html: `Cliente com ID ${idCliente} deletado com sucesso!`, classes: 'green'});
+    } catch (error) {
+        // Exibir mensagem de erro
+        M.toast({html: `Erro ao deletar o cliente: ${error.message}`, classes: 'red'});
     }
-
-    // Exibir mensagem de confirmação
-    console.log(`Cliente com ID ${idCliente} deletado.`);
-
-    CRUD_API("clientes", "DELETE", idCliente);
-
-    // Recarregar a página (opcional)
-    location.reload();
 }
+
 
 function cadastrarCliente() {
     // Obtendo os valores dos campos
-    const id_cliente = parseInt(document.getElementById('id_cliente').value) || Date.now(); // Gera um ID único se não estiver definido
     const nome_cliente = document.getElementById('nome_cliente').value;
     const telefone_cliente = document.getElementById('telefone_cliente').value;
     const rua_cliente = document.getElementById('rua_cliente').value;
@@ -227,7 +238,6 @@ function cadastrarCliente() {
 
     // Criar um objeto de cliente
     const cliente = {
-        id_cliente,
         nome_cliente,
         telefone_cliente,
         rua_cliente,
@@ -235,11 +245,13 @@ function cadastrarCliente() {
         id_bairro
     };
 
+    CRUD_API("clientes", "POST",null , cliente);
     // Recuperar clientes existentes do localStorage
     let clientes = JSON.parse(localStorage.getItem('clientes')) || [];
 
     // Adicionar o novo cliente
     clientes.push(cliente);
+
 
     // Atualizar o localStorage
     localStorage.setItem('clientes', JSON.stringify(clientes));
@@ -248,6 +260,6 @@ function cadastrarCliente() {
 
     // Limpar o formulário após o cadastro
     document.getElementById('cadastrar-cliente-form').reset();
-
-    location.reload();
 }
+
+

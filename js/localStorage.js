@@ -55,35 +55,38 @@ async function setLocalStorage() {
 getLocalStorage("produtos");
 getLocalStorage("clientes");
 
-
 async function CRUD_API(tabela, metodo, id, dados = null) {
-    // URL da API onde os dados serão enviados
-    const url = `https://batistaluccas.pythonanywhere.com/API/${tabela}/${id ? `${id}/` : ''}`; // Adiciona o ID à URL se ele existir
-  
-    // Configuração da requisição
-    const options = {
-      method: metodo,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-  
-    // Adiciona o corpo da requisição se for necessário
-    if (dados && (metodo === 'POST' || metodo === 'PUT' || metodo === 'PATCH')) {
-      options.body = JSON.stringify(dados); // Converte os dados para JSON
+  // URL da API onde os dados serão enviados
+  const url = `https://batistaluccas.pythonanywhere.com/API/${tabela}/${id ? `${id}/` : ''}`; // Adiciona o ID à URL se ele existir
+
+  // Configuração da requisição
+  const options = {
+    method: metodo,
+    headers: {
+      'Content-Type': 'application/json'
     }
-  
-    try {
-      const response = await fetch(url, options); // Realiza a requisição HTTP
-      if (!response.ok) {
-        throw new Error(`Erro HTTP! Status: ${response.status}`);
-      }
-  
-      const resultado = await response.json(); // Converte a resposta para JSON
-      console.log(resultado); // Exibe o resultado no console
-      return resultado; // Retorna o resultado
-    } catch (error) {
-      console.error("Erro ao consumir a API:", error); // Trata erros na requisição
-    }
+  };
+
+  // Adiciona o corpo da requisição se for necessário
+  if (dados && (metodo === 'POST' || metodo === 'PUT' || metodo === 'PATCH')) {
+    options.body = JSON.stringify(dados); // Converte os dados para JSON
   }
-  
+
+  try {
+    const response = await fetch(url, options); // Realiza a requisição HTTP
+    if (!response.ok) {
+      throw new Error(`Erro HTTP! Status: ${response.status}`);
+    }
+
+    if (response.status === 204) {
+      console.log('Operação bem-sucedida, nenhum conteúdo retornado.');
+      return; // Não há conteúdo para retornar
+    }
+
+    const resultado = await response.json(); // Converte a resposta para JSON
+    console.log(resultado); // Exibe o resultado no console
+    return resultado; // Retorna o resultado
+  } catch (error) {
+    console.error("Erro ao consumir a API:", error); // Trata erros na requisição
+  }
+}
