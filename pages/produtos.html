@@ -8,8 +8,9 @@
     <!-- Link para o Materialize CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
     <!-- Seu estilo personalizado -->
-    <link rel="stylesheet" href="/css/custom.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/css/materialize.min.css">
+    <link rel="stylesheet" href="/css/custom.css">
     <script src="/js/CRUD_produtos.js"></script>
     <style>
         @media (max-width: 2000px) {
@@ -147,9 +148,8 @@
             <div class="row"></div>
             <div class="row center-align">
                 <div class="col s12">
-                    <a href="#!" class="btn-small btn-new-client modal-trigger" data-target="cadastrar-produto">NOVO
+                    <a href="#!" class="btn-small btn-voltar modal-trigger" data-target="cadastrar-produto">NOVO
                         PRODUTO</a>
-
                 </div>
             </div>
 
@@ -175,23 +175,6 @@
 
             </script>
 
-            <div id="modal-cadastrar">
-                <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                        const modalContainer = document.getElementById('modal-cadastrar');
-
-                        fetch('modal_cadastrar_produto.html')
-                            .then(response => response.text())
-                            .then(data => {
-                                modalContainer.innerHTML = data;
-                                // Inicializar o modal após carregá-lo
-                                const elems = document.querySelectorAll('.modal');
-                                M.Modal.init(elems);
-                            })
-                            .catch(error => console.error('Erro ao carregar o modal:', error));
-                    });
-                </script>
-            </div>
             <!-- Modal Editar Produto -->
             <div id="editar-produto" class="modal">
                 <div class="modal-content">
@@ -276,7 +259,7 @@
         </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="/js/materialize.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/js/localStorage.js"></script>
     <script>

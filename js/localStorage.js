@@ -22,44 +22,68 @@ function getLocalStorage(tabela) {
     }
 }
 
-function setLocalStorage() {
-    // Dados padrão para produtos e clientes
-    const produtos = [
-        { id_produto: 1, nome_produto: 'gas', desc_produto: 'botijão de gás de 13kg', quantidade_disponivel: 5, preco_produto: 2, nivel_abastecimento: 3, imagem_produto: "/img/gas.jpg" },
-        { id_produto: 5, nome_produto: 'prego', desc_produto: 'prego fino de aço', quantidade_disponivel: 44, preco_produto: 200, nivel_abastecimento: 4, imagem_produto: "/img/prego.jpg"},
-        { id_produto: 7, nome_produto: 'agua', desc_produto: 'galão de água 20 L', quantidade_disponivel: 14, preco_produto: 10, nivel_abastecimento: 5, imagem_produto: "/img/galao.png"},
-        { id_produto: 2, nome_produto: 'agua', desc_produto: 'galão de água 20 L', quantidade_disponivel: 14, preco_produto: 10, nivel_abastecimento: 5, imagem_produto: "/img/galao.png"},
-        { id_produto: 3, nome_produto: 'agua', desc_produto: 'galão de água 20 L', quantidade_disponivel: 14, preco_produto: 10, nivel_abastecimento: 5, imagem_produto: "/img/galao.png"},
-        { id_produto: 4, nome_produto: 'agua', desc_produto: 'galão de água 20 L', quantidade_disponivel: 14, preco_produto: 10, nivel_abastecimento: 5, imagem_produto: "/img/galao.png"}
-
-
-    ];
-    
-    const clientes = [
-        { id_cliente: 7, nome_cliente: 'amanda', telefone_cliente: '31991882338', rua_cliente: 'Cícero Lamartine', numero_cliente: '618', id_bairro: 1 },
-        { id_cliente: 8, nome_cliente: 'amanda', telefone_cliente: '31991882338', rua_cliente: 'Cícero Lamartine', numero_cliente: '618', id_bairro: 1 },
-        { id_cliente: 9, nome_cliente: 'joaa', telefone_cliente: '44433', rua_cliente: 'ffdfd', numero_cliente: '3', id_bairro: 1 }
-    ];
-
-    const bairros = [
-        { id_bairro: 1, nome_bairro: "cruzeiro", frete_bairro: "5"}
-    ];
-
-    const cart = [];
-
-    const nota_venda = [];
-
-    const item_nota_venda = [];
-
-    // Define os dados no localStorage
-    localStorage.setItem('produtos', JSON.stringify(produtos));
-    localStorage.setItem('clientes', JSON.stringify(clientes));
-    localStorage.setItem('cart', JSON.stringify(cart));
-    localStorage.setItem('bairros', JSON.stringify(bairros));
-    localStorage.setItem('nota_venda', JSON.stringify(nota_venda));
-    localStorage.setItem('item_nota_venda', JSON.stringify(item_nota_venda));
-}
+async function setLocalStorage() {
+    try {
+      // Dados padrão para produtos e clientes, usando await para esperar o resultado das chamadas assíncronas
+      const produtos = await CRUD_API("produtos", "GET");
+      const clientes = await CRUD_API("clientes", "GET");  
+      const bairros = await CRUD_API("bairros", "GET");
+  
+      const cart = [];
+      const nota_venda = [];
+      const item_nota_venda = [];
+  
+      // Define os dados no localStorage
+      localStorage.setItem('produtos', JSON.stringify(produtos));
+      localStorage.setItem('clientes', JSON.stringify(clientes));
+      localStorage.setItem('cart', JSON.stringify(cart));
+      localStorage.setItem('bairros', JSON.stringify(bairros));
+      localStorage.setItem('nota_venda', JSON.stringify(nota_venda));
+      localStorage.setItem('item_nota_venda', JSON.stringify(item_nota_venda));
+  
+      console.log('Dados armazenados com sucesso no localStorage');
+    } catch (error) {
+      console.error('Erro ao definir dados no localStorage:', error);
+    }
+  }
+  
+  // Chama a função para inicializar os dados no localStorage
+  setLocalStorage();
+  
 
 // Chama a função para garantir que os dados estejam no localStorage
 getLocalStorage("produtos");
 getLocalStorage("clientes");
+
+
+async function CRUD_API(tabela, metodo, id, dados = null) {
+    // URL da API onde os dados serão enviados
+    const url = `http://127.0.0.1:8000/API/${tabela}/${id ? `${id}/` : ''}`; // Adiciona o ID à URL se ele existir
+  
+    // Configuração da requisição
+    const options = {
+      method: metodo,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+  
+    // Adiciona o corpo da requisição se for necessário
+    if (dados && (metodo === 'POST' || metodo === 'PUT' || metodo === 'PATCH')) {
+      options.body = JSON.stringify(dados); // Converte os dados para JSON
+    }
+  
+    try {
+      const response = await fetch(url, options); // Realiza a requisição HTTP
+      if (!response.ok) {
+        throw new Error(`Erro HTTP! Status: ${response.status}`);
+      }
+  
+      const resultado = await response.json(); // Converte a resposta para JSON
+      console.log(resultado); // Exibe o resultado no console
+      return resultado; // Retorna o resultado
+    } catch (error) {
+      console.error("Erro ao consumir a API:", error); // Trata erros na requisição
+    }
+  }
+  

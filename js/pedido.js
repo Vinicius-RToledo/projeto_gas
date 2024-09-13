@@ -6,32 +6,18 @@ function gerarHTMLProdutos() {
     container.innerHTML = '';
 
     let row; // Variável para a linha atual
-
+    row = document.createElement('div'); // Cria uma nova linha
+    row.className = 'row center-align'; // Adiciona a classe de linha
+    
     produtos.forEach((produto, index) => {
-        // Criação de uma nova row a cada 3 produtos
-        if (index % 3 === 0) {
-            // Adiciona uma coluna vazia no início da nova linha
 
-            row = document.createElement('div'); // Cria uma nova linha
-            row.className = 'row center-align'; // Adiciona a classe de linha
-            container.appendChild(row); // Adiciona a nova linha ao contêiner
-
-            const emptyCol = document.createElement('div');
-            emptyCol.className = 'col s.5'; // Coluna vazia para espaçamento
-            row.appendChild(emptyCol);
-
-        }
-
-        // Adiciona uma coluna vazia antes de cada card, exceto o primeiro card da linha
-        if (index % 3 !== 0) {
-            const emptyCol = document.createElement('div');
-            emptyCol.className = 'col s1'; // Coluna vazia para espaçamento
-            row.appendChild(emptyCol);
-        }
+        const colunaVazia = document.createElement('div');
+        colunaVazia.className = 'col s0 m1 l1';
+        row.appendChild(colunaVazia);
 
         // Criação do card do produto
         const productCard = document.createElement('div'); // Elemento pai para o card do produto
-        productCard.className = 'card col s3'; // Adiciona a classe de card e a largura de coluna
+        productCard.className = 'card col s11 m5 l3'; // Adiciona a classe de card e a largura de coluna
 
         const cardContent = document.createElement('div');
         cardContent.className = 'card-content center'; // Adiciona a classe de conteúdo do card
@@ -111,21 +97,10 @@ function gerarHTMLProdutos() {
         row.appendChild(productCard);
         atualizarQuantidadeNoHTML(produto.id_produto);
 
-        // Adiciona uma coluna vazia após o último card da linha
-        if ((index + 1) % 3 === 0) {
-            const emptyColEnd = document.createElement('div');
-            emptyColEnd.className = 'col s.5'; // Coluna vazia para espaçamento
-            row.appendChild(emptyColEnd);
-        }
+       
     });
 
-    // Adiciona uma coluna vazia no final da última linha se o número total de produtos não for múltiplo de 3
-    const lastRow = container.querySelector('.row:last-of-type');
-    if (lastRow && produtos.length % 3 !== 0) {
-        const emptyColEnd = document.createElement('div');
-        emptyColEnd.className = 'col s1'; // Coluna vazia para espaçamento
-        lastRow.appendChild(emptyColEnd);
-    }
+    container.appendChild(row); // Adiciona a nova linha ao contêiner
 
 }
 

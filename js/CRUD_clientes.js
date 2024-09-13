@@ -160,6 +160,10 @@ function editarCliente(id_cliente) {
             numero_cliente: numero_cliente,
             id_bairro: id_bairro
         };
+
+        
+
+        CRUD_API("clientes", "PUT", id_cliente, clienteAtualizado);
     
         // o próximo código deve ser removido e o código comentado deve voltar quando for conectar com a API
     
@@ -205,6 +209,8 @@ function deletarCliente(idCliente) {
 
     // Exibir mensagem de confirmação
     console.log(`Cliente com ID ${idCliente} deletado.`);
+
+    CRUD_API("clientes", "DELETE", idCliente);
 
     // Recarregar a página (opcional)
     location.reload();
