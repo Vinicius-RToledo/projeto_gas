@@ -66,6 +66,7 @@ function gerarHTMLProdutos() {
         const colQuantity = document.createElement('div');
         colQuantity.className = 'col s4';
         const quantity = document.createElement('span');
+        quantity.textContent = 0;
         quantity.id = `quantity-${produto.id_produto}`; // Adiciona um ID único para cada quantidade
         quantity.style.fontSize = '1.5rem';
         colQuantity.appendChild(quantity);

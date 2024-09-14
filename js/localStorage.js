@@ -48,7 +48,19 @@ async function setLocalStorage() {
   }
   
   // Chama a função para inicializar os dados no localStorage
-  setLocalStorage();
+  
+// Verifica se os itens necessários estão no localStorage
+function verificarLocalStorage() {
+  const produtos = localStorage.getItem('produtos');
+  const clientes = localStorage.getItem('clientes');
+  
+  if (!produtos || !clientes) {
+      setLocalStorage();
+  }
+}
+
+// Chama a função para verificar o localStorage
+verificarLocalStorage();
   
 
 // Chama a função para garantir que os dados estejam no localStorage

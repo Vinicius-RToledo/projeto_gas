@@ -85,8 +85,9 @@ function Script_da_modal_finalizar(){
 }
 
 
-function confirmarPedido() {
-
+async function confirmarPedido(event) {
+    event.preventDefault();
+    
     // Recuperar as tabelas do localStorage
     const notas = JSON.parse(localStorage.getItem('nota_venda')) || [];
     const itens = JSON.parse(localStorage.getItem('item_nota_venda')) || [];
@@ -100,12 +101,12 @@ function confirmarPedido() {
     const rua_entrega = document.getElementById('rua').value;
     const numero_entrega = document.getElementById('numero').value;
     const telefone_cliente = document.getElementById('telefone').value;
-    
-    const bairroSelecionado = bairros.find(bairro => bairro.id_bairro === id_bairro);
-                if (bairroSelecionado) {
-                    frete = bairroSelecionado.frete_bairro;
-                }
 
+    const bairroSelecionado = bairros.find(bairro => bairro.id_bairro === id_bairro);
+    let frete = 0;
+    if (bairroSelecionado) {
+        frete = bairroSelecionado.frete_bairro;
+    }
 
     let subtotal = 0;
 
@@ -121,48 +122,76 @@ function confirmarPedido() {
 
     subtotal += parseFloat(frete);
 
-
     // Criar o objeto nota_venda
-    const novaNotaVenda = {
-        id_nota_venda: notas.length + 1, // Incrementa o ID da nota venda
+    let novaNotaVenda = {
+        id_nota_venda: null,
         valor_total: parseFloat(subtotal),
         data_nota_venda: new Date().toISOString().split('T')[0], // Data de hoje no formato 'YYYY-MM-DD'
         id_cliente: id_cliente,
-        id_bairro: id_bairro,
+        id_tipo_pagamento: 1,
+        id_bairro_entrega: id_bairro,
         rua_entrega: rua_entrega,
         numero_entrega: numero_entrega,
-        telefone_cliente: telefone_cliente
+        telefone_entrega: telefone_cliente
     };
 
-    // Adicionar a nova nota à lista de notas
-    notas.push(novaNotaVenda);
+    try {
+        // Adicionar a nova nota à lista de notas
+        novaNotaVenda = await CRUD_API("notas-venda", "POST", null, novaNotaVenda);
+        notas.push(novaNotaVenda);
 
-    // Salvar no localStorage
-    localStorage.setItem('nota_venda', JSON.stringify(notas));
+        // Salvar no localStorage
+        localStorage.setItem('nota_venda', JSON.stringify(notas));
 
+        const id_nota_venda = novaNotaVenda.id_nota_venda;
 
-    // Criar os objetos item_nota_venda associados a esta nota
-    const itensNotaVenda = cart.map((item, index) => {
-        return {
-            id_item_da_nota: index + 1, // Incrementa o ID do item
-            id_nota_venda: novaNotaVenda.id_nota_venda, // Associa ao ID da nota de venda
-            id_produto: item.produto.id_produto,
-            quantidade_item: item.quantidade_cart
-        };
-    });
-    
+        // Criar os objetos item_nota_venda associados a esta nota
+        const itensNotaVenda = cart.map((item, index) => {
+            return {
+                id_item_da_nota: index + 1, // Incrementa o ID do item
+                id_nota_venda: id_nota_venda, // Associa ao ID da nota de venda
+                id_produto: item.produto.id_produto,
+                quantidade_item: item.quantidade_cart
+            };
+        });
 
-    // Adicionar os itens da nota à lista existente
-    itens.push(...itensNotaVenda);
+        // Adicionar os itens da nota à lista existente
+        itens.push(...itensNotaVenda);
 
-    // Salvar os itens da nota no localStorage
-    localStorage.setItem('item_nota_venda', JSON.stringify(itens));
+        // Salvar os itens da nota no localStorage
+        localStorage.setItem('item_nota_venda', JSON.stringify(itens));
 
-    // Confirmar a ação
-    alert('Pedido confirmado com sucesso!');
+        // Função principal para adicionar todos os itens
+        await adicionarItens(itensNotaVenda);
 
-    localStorage.removeItem("cart");
-    
-    // Recarregar a página
-    window.location.reload();
+        // Confirmar a ação
+        localStorage.removeItem("cart");
+        M.toast({html: `Venda cadastrada com sucesso!`, classes: 'green'});
+
+        // Fechar Modal
+        const modalInstance = M.Modal.getInstance(document.getElementById('modal-finalizar'));
+        if (modalInstance) {
+            modalInstance.close();
+        }
+
+        // Atualizar a quantidade no HTML para cada produto
+        itensNotaVenda.forEach(item => {
+            atualizarQuantidadeNoHTML(item.id_produto);
+        });
+
+    } catch (error) {
+        console.error('Erro ao confirmar o pedido:', error);
+    }
+}
+
+// Função para adicionar itens
+async function adicionarItens(itensNotaVenda) {
+    try {
+        const promises = itensNotaVenda.map(async (item) => {
+            await CRUD_API("itens-nota-venda", "POST", null, item); // Chama a função CRUD_API para cada item
+        });
+        await Promise.all(promises);
+    } catch (error) {
+        console.error('Erro ao adicionar itens:', error);
+    }
 }
