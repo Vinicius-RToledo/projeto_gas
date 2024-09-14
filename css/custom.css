@@ -106,7 +106,7 @@ main {
 }
 
 .btn-new-client,
-.btn-voltar, .btn-imp-balanco {
+.btn-voltar, .btn-imp-balanco, .btn-filtrar {
     font-size: 16px;
     width: 200px;
     background-color: #ef6c00;
@@ -124,7 +124,7 @@ main {
 .btn-voltar:hover,
 .btn-action-card:hover,
 .btn-imp-balanco:hover,
-.btn-cad:hover {
+.btn-cad:hover, .btn-filtrar:hover {
     background-color: #0301fa;
     color: #ef6c00;
     transition: background-color 0.1s, color 0.1s;
