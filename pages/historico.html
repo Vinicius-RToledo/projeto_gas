@@ -117,11 +117,14 @@
                     </thead>
 
                     <tbody id="tabela-corpo">
-
+                        <td>1</td>
+                        <td>Maria</td>
+                        <td>12/08/2024</td>
+                        <td>13:25:52</td>
+                        <td>Gás GLP P13</td>
+                        <td>950236425</td>
+                        <td>R$125,00</td>
                     </tbody>
-                    <script>
-                        listarClientes();
-                    </script>
                 </table>
             </div>
 
@@ -145,7 +148,7 @@
 
             <div class="row">
                 <div class="col s12 center">
-                    <button id="filtrar-vendas" class="btn btn-filtrar">Filtrar</button>
+                    <button id="filtrar-vendas" class="btn btn-filtrar" onclick="filtrarVendas()">Filtrar</button>
                 </div>
             </div>
 
@@ -161,10 +164,50 @@
     </footer>
 
     <script>
+
+        // Script para filtar os pedidos através das datas selecionadas
+
+        function filtrarVendas() {
+            // Obtém os valores das datas selecionadas
+            const dataInicio = document.getElementById('data-inicio').value;
+            const dataFim = document.getElementById('data-fim').value;
+    
+            // Verifica se as datas foram preenchidas
+            if (!dataInicio || !dataFim) {
+                alert('Por favor, selecione ambas as datas.');
+                return;
+            }
+    
+            // Converte as datas para o formato padrão (YYYY-MM-DD) para facilitar a comparação
+            const inicio = new Date(dataInicio.split('/').reverse().join('-'));
+            const fim = new Date(dataFim.split('/').reverse().join('-'));
+    
+            // Obtém todas as linhas da tabela
+            const linhas = document.querySelectorAll('#tabela-corpo tr');
+            
+            // Itera sobre as linhas e filtra as vendas pela data
+            linhas.forEach(linha => {
+                // Obtém a data da venda da coluna 3 (índice 2)
+                const dataVendaTexto = linha.cells[2].textContent;
+                const dataVenda = new Date(dataVendaTexto.split('/').reverse().join('-'));
+    
+                // Verifica se a data da venda está entre as datas selecionadas
+                if (dataVenda >= inicio && dataVenda <= fim) {
+                    linha.style.display = ''; // Exibe a linha se estiver no intervalo
+                } else {
+                    linha.style.display = 'none'; // Esconde a linha se estiver fora do intervalo
+                }
+            });
+        }
+    </script>
+    
+
+    <script>
+        //Script para manipulação dos calendários
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('.datepicker');
             M.Datepicker.init(elems, {
-                format: 'dd/mm/yyyy' // Formato desejado para a data
+                format: 'dd/mm/yyyy'
             });
         });
     </script>
