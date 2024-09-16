@@ -233,7 +233,7 @@ async function deletarProduto(idProduto) {
 }
 
 
-function cadastrarProduto() {
+async function cadastrarProduto() {
         // Obtendo os valores dos campos
         
         const nome_produto = document.getElementById('nome_produto').value;
@@ -253,13 +253,13 @@ function cadastrarProduto() {
             nivel_abastecimento
         };
 
-        CRUD_API("produtos", "POST",null , produto);
+        produto_retornado_API = await CRUD_API("produtos", "POST",null , produto);
 
         // Recuperar produtos existentes do localStorage
         let produtos = JSON.parse(localStorage.getItem('produtos')) || [];
 
         // Adicionar o novo produto
-        produtos.push(produto);
+        produtos.push(produto_retornado_API);
 
         // Atualizar o localStorage
         localStorage.setItem('produtos', JSON.stringify(produtos));
