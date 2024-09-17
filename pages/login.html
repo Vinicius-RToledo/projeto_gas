@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <!-- Materialize CSS -->
+    <link href="/css/materialize.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/custom.css">
+    <!-- Material Icons (para ícones) -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        /* Centralizar o formulário de login */
+        .login-container {
+            margin-top: 100px;
+        }
+
+        /* Personalizar o botão */
+        .btn-custom {
+            background-color: #757575;
+        }
+
+        @media (max-width: 2000px) {
+            main {
+                margin-top: 8%;
+            }
+        }
+
+        @media (max-width: 884px) {
+            main {
+                margin-top: 30%;
+            }
+        }
+
+        @media (max-width: 430px) {
+
+            main {
+                margin-top: 35%;
+            }
+        }
+    </style>
+</head>
+
+<body class="grey darken-1">
+
+    <header class="navbar-fixed">
+        <nav class="navegation grey darken-1" style="height: 200px;">
+            <div class="row">
+                <div class="brand-logo center">
+                    <img src="/img/LV.png" style="height: 200px;" alt="Logo">
+                </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container login-container">
+            <div class="row">
+                <div class="col s12 m6 offset-m3">
+                    <div class="card">
+                        <div class="card-content grey lighten-3">
+                            <span class="card-title center">Login</span>
+                            <form method="POST" action="/login">
+                                <!-- CSRF Token para proteção de formulários (Django ou outro framework) -->
+                                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+                                <div class="input-field">
+                                    <i class="material-icons prefix">account_circle</i>
+                                    <input id="username" name="username" type="text" class="validate" required>
+                                    <label for="username">Usuário</label>
+                                </div>
+                                <div class="input-field">
+                                    <i class="material-icons prefix">lock</i>
+                                    <input id="password" name="password" type="password" class="validate" required>
+                                    <label for="password">Senha</label>
+                                </div>
+                                <div class="center">
+                                    <button class="btn waves-effect waves-light btn-custom" type="submit">
+                                        Entrar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="page-footer grey darken-1">
+        <div class="container center grey darken-1">
+            <p class="text-information">
+                © 2024 LV Soluções Tecnológicas. Todos os direitos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Materialize JS -->
+    <script src="/js/materialize.min.js"></script>
+</body>
+
+</html>
