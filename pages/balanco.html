@@ -57,6 +57,33 @@
             background-color: #EF6C00;
             height: 2px;
         }
+
+        .tabela-container {
+            max-height: 230px;
+            /* Ajuste conforme necessário */
+            overflow-y: auto;
+            /* Adiciona rolagem vertical */
+            display: block;
+        }
+
+        .tabela-container table {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+        }
+
+        .tabela-container thead th {
+            position: -webkit-sticky;
+            /* Para suporte a WebKit */
+            position: sticky;
+            top: 0;
+            background: white;
+            /* Cor de fundo para o cabeçalho fixo */
+            z-index: 10;
+            /* Garante que o cabeçalho fique acima do conteúdo */
+            border-bottom: 2px solid #ddd;
+            /* Adiciona uma borda inferior para o cabeçalho */
+        }
     </style>
 </head>
 
@@ -86,9 +113,9 @@
     <main>
 
         <div class="row"></div>
-            <div class="col s12 center white-text">
-                <h1>BALANÇO</h1>
-            </div>
+        <div class="col s12 center white-text">
+            <h1>BALANÇO</h1>
+        </div>
         </div>
 
         <div class=" row container main-container">
@@ -102,45 +129,50 @@
                 </ul>
                 <div id="test-swipe-1" class="col s12">
                     <div class="row tabela-balanco">
-                        <table class="white centered centered responsive-table table-layout-fixed">
-                            <thead>
-                                <tr>
-                                    <th>Código Venda</th>
-                                    <th>Nome</th>
-                                    <th>Data</th>
-                                    <th>Hora</th>
-                                    <th>Descrição</th>
-                                    <th>Telefone</th>
-                                    <th>Valor Total</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
+                        <div class="tabela-container">
+                            <table class="white centered centered responsive-table table-layout-fixed">
+                                <thead>
+                                    <tr>
+                                        <th>Código Venda</th>
+                                        <th>Nome</th>
+                                        <th>Data</th>
+                                        <th>Hora</th>
+                                        <th>Descrição</th>
+                                        <th>Telefone</th>
+                                        <th>Valor Total</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
 
-                            <tbody id="table-balanco-diario">
+                                <tbody id="table-balanco-diario">
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <div id="test-swipe-2" class="col s12">
                     <div class="row tabela-balanco">
-                        <table class="white centered centered responsive-table table-layout-fixed">
-                            <thead>
-                                <tr>
-                                    <th>Venda Entregas</th>
-                                    <th>Venda Loja</th>
-                                    <th>Valor Parcial</th>
-                                </tr>
-                            </thead>
+                        <div class="tabela-container">
+                            <table class="white centered centered responsive-table table-layout-fixed">
+                                <thead>
+                                    <tr>
+                                        <th>Venda Entregas</th>
+                                        <th>Venda Loja</th>
+                                        <th>Valor Parcial</th>
+                                    </tr>
+                                </thead>
 
-                            <tbody id="table-balanco-parcial">
+                                <tbody id="table-balanco-parcial">
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div class="row center-align">
                         <div class="col s12">
-                            <a href="#!" class="btn-small btn-imp-balanco hide-on-med-and-down" data-target="imprimir-balanco">IMPRIMIR
+                            <a href="#!" class="btn-small btn-imp-balanco hide-on-med-and-down"
+                                data-target="imprimir-balanco">IMPRIMIR
                                 BALANÇO</a>
                         </div>
                     </div>

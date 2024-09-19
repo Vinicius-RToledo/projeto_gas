@@ -21,14 +21,30 @@
                 /* Ou relative, se preferir */
                 top: 0;
                 left: 0;
-                z-index: 1000;
                 margin-top: 0px;
+                margin-top: 200px;
+            }
+
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                z-index: 1000;
             }
         }
 
         @media (max-width: 885px) {
             main {
-                margin-top: 100px;
+                margin-top: 200px;
+            }
+
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                z-index: 1000;
             }
 
             .navegation {
@@ -41,12 +57,20 @@
         }
 
         @media (max-width: 430px) {
+            .navbar {
+                position: relative;
+                top: 0;
+                left: 0;
+                width: 100%;
+                z-index: 1000;
+            }
+
             .navegation {
                 height: 300px;
             }
 
             main {
-                margin-top: 0px;
+                margin-top: 20px;
                 margin-bottom: 5%;
             }
 
@@ -79,7 +103,7 @@
 
 <body>
 
-    <header>
+    <header class="navbar">
         <nav class="navegation white">
             <div class="row header-container">
                 <div class="col m4 l5 center div-icon-header">
