@@ -75,6 +75,33 @@
             text-align: center;
             font-weight: bold;
         }
+
+        .tabela-container {
+            max-height: 230px;
+            /* Ajuste conforme necessário */
+            overflow-y: auto;
+            /* Adiciona rolagem vertical */
+            display: block;
+        }
+
+        .tabela-container table {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+        }
+
+        .tabela-container thead th {
+            position: -webkit-sticky;
+            /* Para suporte a WebKit */
+            position: sticky;
+            top: 0;
+            background: white;
+            /* Cor de fundo para o cabeçalho fixo */
+            z-index: 10;
+            /* Garante que o cabeçalho fique acima do conteúdo */
+            border-bottom: 2px solid #ddd;
+            /* Adiciona uma borda inferior para o cabeçalho */
+        }
     </style>
 </head>
 
@@ -122,27 +149,28 @@
         </div>
         <div class=" row container main-container">
 
-            <table id="tabela-produtos" class=" white centered centered responsive-table table-layout-fixed">
-                <thead>
-                    <tr>
-                        <th>ID Produto</th>
-                        <th>Nome</th>
-                        <th>Descrição</th>
-                        <th>Preço</th>
-                        <th>Quantidade Disponivel</th>
-                        <th>Nível de Abastecimento</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <!-- Carrega os dados na tabela -->
-                <tbody id="dados-api">
+            <div class="tabela-container">
+                <table id="tabela-produtos" class=" white centered centered responsive-table table-layout-fixed">
+                    <thead>
+                        <tr>
+                            <th>ID Produto</th>
+                            <th>Nome</th>
+                            <th>Descrição</th>
+                            <th>Preço</th>
+                            <th>Quantidade Disponivel</th>
+                            <th>Nível de Abastecimento</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <!-- Carrega os dados na tabela -->
+                    <tbody id="dados-api">
 
-                </tbody>
-                <script>
-                    listar_produto();
-                </script>
-            </table>
-
+                    </tbody>
+                    <script>
+                        listar_produto();
+                    </script>
+                </table>
+            </div>
 
             <!-- Botão Novo Produto-->
             <div class="row"></div>

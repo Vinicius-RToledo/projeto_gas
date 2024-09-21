@@ -56,7 +56,7 @@ function Script_da_modal_finalizar(){
         bairros.forEach(bairro => {
             const option = document.createElement('option');
             option.value = bairro.id_bairro;
-            option.textContent = `${bairro.nome_bairro} - Frete: R$${bairro.frete_bairro}`;
+            option.textContent = `${bairro.nome_bairro}`; //- Frete: R$${bairro.frete_bairro} removi o valor do bairro da label, deixando apenaso nome
             selectBairro.appendChild(option);
         });
         M.FormSelect.init(selectBairro); // Inicializar o select do Materialize
@@ -67,6 +67,7 @@ function Script_da_modal_finalizar(){
             console.log("Cliente selecionado:", clienteSelecionado);
 
             if (clienteSelecionado) {
+                //document.getElementById('frete').value = clienteSelecionado.frete_bairro || ''; adicionei esta parte para tentar exibir o frete na label mas não funcionou
                 document.getElementById('rua').value = clienteSelecionado.rua_cliente || '';
                 document.getElementById('numero').value = clienteSelecionado.numero_cliente || '';
                 document.getElementById('telefone').value = clienteSelecionado.telefone_cliente || '';

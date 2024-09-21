@@ -22,14 +22,30 @@
                 /* Ou relative, se preferir */
                 top: 0;
                 left: 0;
-                z-index: 1000;
                 margin-top: 0px;
+                margin-top: 200px;
+            }
+
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                z-index: 1000;
             }
         }
 
         @media (max-width: 885px) {
             main {
-                margin-top: 100px;
+                margin-top: 200px;
+            }
+
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                z-index: 1000;
             }
 
             .navegation {
@@ -42,12 +58,20 @@
         }
 
         @media (max-width: 430px) {
+            .navbar {
+                position: relative;
+                top: 0;
+                left: 0;
+                width: 100%;
+                z-index: 1000;
+            }
+
             .navegation {
                 height: 300px;
             }
 
             main {
-                margin-top: 0px;
+                margin-top: 20px;
                 margin-bottom: 5%;
             }
 
@@ -80,7 +104,7 @@
 
 <body>
 
-    <header>
+    <header class="navbar">
         <nav class="navegation white">
             <div class="row header-container">
                 <div class="col m4 l5 center div-icon-header">
@@ -147,7 +171,8 @@
                 <h4>Resumo do Pedido</h4>
                 <ul id="cart-items" class="collection"></ul>
                 <h5>Subtotal dos itens: R$<span id="subtotal">0.00</span></h5>
-                <h5>Dados do Cliente</h5>
+                <h5 class="center">Dados do Cliente</h5>
+                <div class="row"></div>
                 <form id="cliente-form" onsubmit="confirmarPedido(event)">
                     <!-- Campo Select de Cliente -->
                     <div class="input-field flex-container">
@@ -174,28 +199,32 @@
                         <label for="select-bairro">Bairro</label>
                     </div>
 
-                    <!-- Campo Frete -->
-                    <div class="input-field">
-                        <input id="frete" type="text" class="validate">
-                        <label for="frete">Frete</label>
+                    <div class="row">
+                        <!-- Campo Frete -->
+                        <div class="input-field col s6">
+                            <input id="frete" type="text" class="validate">
+                            <label for="frete">Frete</label>
+                        </div>
+
+                        <!-- Campo Rua -->
+                        <div class="input-field col s6">
+                            <input id="rua" type="text" class="validate">
+                            <label for="rua">Rua</label>
+                        </div>
                     </div>
 
-                    <!-- Campo Rua -->
-                    <div class="input-field">
-                        <input id="rua" type="text" class="validate">
-                        <label for="rua">Rua</label>
-                    </div>
+                    <div class="row">
+                        <!-- Campo Número -->
+                        <div class="input-field col s6">
+                            <input id="numero" type="number" class="validate">
+                            <label for="numero">Nº</label>
+                        </div>
 
-                    <!-- Campo Número -->
-                    <div class="input-field">
-                        <input id="numero" type="text" class="validate">
-                        <label for="numero">Nº</label>
-                    </div>
-
-                    <!-- Campo Telefone -->
-                    <div class="input-field">
-                        <input id="telefone" type="tel" class="validate">
-                        <label for="telefone">Telefone</label>
+                        <!-- Campo Telefone -->
+                        <div class="input-field col s6">
+                            <input id="telefone" type="tel" class="validate">
+                            <label for="telefone">Telefone</label>
+                        </div>
                     </div>
 
                     <div class="row">
@@ -223,6 +252,17 @@
             </p>
         </div>
     </footer>
+
+    <!-- Incluindo o jQuery e a biblioteca de máscara de telefone -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+    <!-- Script para formatar telefone-->
+    <script>
+        $(document).ready(function () {
+            $('#telefone').mask('(00) 00000-0000');
+        });
+    </script>
 
     <script src="/js/materialize.min.js"></script>
     <script src="/js/localStorage.js">

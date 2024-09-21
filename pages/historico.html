@@ -67,6 +67,33 @@
         .material-icons.prefix {
             color: #ffffff;
         }
+
+        .tabela-container {
+            max-height: 230px;
+            /* Ajuste conforme necessário */
+            overflow-y: auto;
+            /* Adiciona rolagem vertical */
+            display: block;
+        }
+
+        .tabela-container table {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+        }
+
+        .tabela-container thead th {
+            position: -webkit-sticky;
+            /* Para suporte a WebKit */
+            position: sticky;
+            top: 0;
+            background: white;
+            /* Cor de fundo para o cabeçalho fixo */
+            z-index: 10;
+            /* Garante que o cabeçalho fique acima do conteúdo */
+            border-bottom: 2px solid #ddd;
+            /* Adiciona uma borda inferior para o cabeçalho */
+        }
     </style>
 </head>
 
@@ -103,22 +130,24 @@
 
         <div class=" row container main-container">
             <div class="row">
-                <table id="tabela-clientes" class=" white centered centered responsive-table table-layout-fixed">
-                    <thead>
-                        <tr>
-                            <th>Código Venda</th>
-                            <th>Nome</th>
-                            <th>Data</th>
-                            <th>Hora</th>
-                            <th>Descrição</th>
-                            <th>Telefone</th>
-                            <th>Valor Total</th>
-                        </tr>
-                    </thead>
+                <div class="tabela-container">
+                    <table id="tabela-clientes" class=" white centered centered responsive-table table-layout-fixed">
+                        <thead>
+                            <tr>
+                                <th>Código Venda</th>
+                                <th>Nome</th>
+                                <th>Data</th>
+                                <th>Hora</th>
+                                <th>Descrição</th>
+                                <th>Telefone</th>
+                                <th>Valor Total</th>
+                            </tr>
+                        </thead>
 
-                    <tbody id="tabela-corpo">
-                    </tbody>
-                </table>
+                        <tbody id="tabela-corpo">
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="row">
@@ -164,26 +193,26 @@
             // Obtém os valores das datas selecionadas
             const dataInicio = document.getElementById('data-inicio').value;
             const dataFim = document.getElementById('data-fim').value;
-    
+
             // Verifica se as datas foram preenchidas
             if (!dataInicio || !dataFim) {
                 alert('Por favor, selecione ambas as datas.');
                 return;
             }
-    
+
             // Converte as datas para o formato padrão (YYYY-MM-DD) para facilitar a comparação
             const inicio = new Date(dataInicio.split('/').reverse().join('-'));
             const fim = new Date(dataFim.split('/').reverse().join('-'));
-    
+
             // Obtém todas as linhas da tabela
             const linhas = document.querySelectorAll('#tabela-corpo tr');
-            
+
             // Itera sobre as linhas e filtra as vendas pela data
             linhas.forEach(linha => {
                 // Obtém a data da venda da coluna 3 (índice 2)
                 const dataVendaTexto = linha.cells[2].textContent;
                 const dataVenda = new Date(dataVendaTexto.split('/').reverse().join('-'));
-    
+
                 // Verifica se a data da venda está entre as datas selecionadas
                 if (dataVenda >= inicio && dataVenda <= fim) {
                     linha.style.display = ''; // Exibe a linha se estiver no intervalo
@@ -193,7 +222,7 @@
             });
         }
     </script>
-    
+
 
     <script>
         //Script para manipulação dos calendários

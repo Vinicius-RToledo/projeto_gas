@@ -81,6 +81,33 @@
             text-align: center;
             font-weight: bold;
         }
+
+        .tabela-container {
+            max-height: 230px;
+            /* Ajuste conforme necessário */
+            overflow-y: auto;
+            /* Adiciona rolagem vertical */
+            display: block;
+        }
+
+        .tabela-container table {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+        }
+
+        .tabela-container thead th {
+            position: -webkit-sticky;
+            /* Para suporte a WebKit */
+            position: sticky;
+            top: 0;
+            background: white;
+            /* Cor de fundo para o cabeçalho fixo */
+            z-index: 10;
+            /* Garante que o cabeçalho fique acima do conteúdo */
+            border-bottom: 2px solid #ddd;
+            /* Adiciona uma borda inferior para o cabeçalho */
+        }
     </style>
 </head>
 
@@ -128,26 +155,28 @@
         </div>
         <div class=" row container main-container">
 
-            <table id="tabela-clientes" class=" white centered centered responsive-table table-layout-fixed">
-                <thead>
-                    <tr>
-                        <th>ID Cliente</th>
-                        <th>Nome</th>
-                        <th>Telefone</th>
-                        <th>Rua</th>
-                        <th>Número Residencial</th>
-                        <th>Bairro</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
+            <div class="tabela-container">
+                <table id="tabela-clientes" class=" white centered centered responsive-table table-layout-fixed">
+                    <thead>
+                        <tr>
+                            <th>ID Cliente</th>
+                            <th>Nome</th>
+                            <th>Telefone</th>
+                            <th>Rua</th>
+                            <th>Número Residencial</th>
+                            <th>Bairro</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
 
-                <tbody id="dados-api">
+                    <tbody id="dados-api">
 
-                </tbody>
-                <script>
-                    listarClientes();
-                </script>
-            </table>
+                    </tbody>
+                    <script>
+                        listarClientes();
+                    </script>
+                </table>
+            </div>
 
             <div id="modal-cadastrar"> </div>
 
