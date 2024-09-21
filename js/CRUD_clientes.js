@@ -102,7 +102,7 @@ function editarCliente(id_cliente) {
     let clientes = [];
     
     
-    clientes = JSON.parse(localStorage.get('clientes')); // Chama a função e espera sua resolução        
+    clientes = JSON.parse(localStorage.getItem('clientes')); // Chama a função e espera sua resolução        
     const cliente = clientes.find(c => c.id_cliente === parseInt(id_cliente));   
     
     

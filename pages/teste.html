@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="/css/custom.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="/js/CRUD_clientes.js"></script>
-    <script src="/js/input_functions.js"></script>
     <style>
         @media (max-width: 2000px) {
             main {
@@ -151,29 +150,6 @@
 
             <div id="modal-cadastrar"> </div>
 
-            <script>
-                // Função para carregar a modal e adicionar o filtro
-                // Carregar o modal dinamicamente
-                fetch('modal_cadastrar_cliente.html')
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Erro ao carregar o modal');
-                        }
-                        return response.text();
-                    })
-                    .then(data => {
-                        document.getElementById('modal-cadastrar').innerHTML = data;
-
-                        filtrar_bairro();
-
-                        // Inicializar a modal
-                        const elems = document.querySelectorAll('.modal');
-                        M.Modal.init(elems);
-                    })
-                    .catch(error => console.error('Erro ao carregar o modal:', error));
-
-            </script>
-
 
 
             <!-- Botão Novo Cliente-->
@@ -185,6 +161,116 @@
 
                 </div>
             </div>
+            <!-- Modal Cadastrar Cliente -->
+            <div id="cadastrar-cliente" class="modal">
+                <div class="modal-content">
+                    <h4>Cadastrar Cliente</h4>
+                    <form id="cadastrar-cliente-form" onsubmit="cadastrarCliente(); return false;" class="col s12">
+                        <!-- Campo ID (oculto) -->
+                        <div class="input-field col s12" style="display: none;">
+                            <input id="id_cliente" name="id_cliente" type="text" class="validate">
+                            <label class="active" for="id">ID do Cliente</label>
+                        </div>
+
+                        <!-- Campo Nome -->
+                        <div class="input-field col s6">
+                            <input id="nome_cliente" name="nome_cliente" type="text" class="validate" required>
+                            <label class="active" for="nome">Nome</label>
+                        </div>
+
+                        <!-- Campo Telefone -->
+                        <div class="input-field col s6">
+                            <input id="telefone_cliente" name="telefone_cliente" type="text" class="validate">
+                            <label class="active" for="telefone">Telefone</label>
+                        </div>
+
+                        <!-- Campo Rua -->
+                        <div class="input-field col s6">
+                            <input id="rua_cliente" name="rua_cliente" type="text" class="validate">
+                            <label class="active" for="rua">Rua</label>
+                        </div>
+
+                        <!-- Campo Número -->
+                        <div class="input-field col s6">
+                            <input id="numero_cliente" name="numero_cliente" type="text" class="validate">
+                            <label class="active" for="numero">Número</label>
+                        </div>
+
+                        <!-- Campo ID Bairro -->
+                        <div class="input-field col s6">
+                            <!-- Campo de pesquisa de bairros -->
+                            <input type="text" id="search-bairro" placeholder="Digite o nome do bairro..."
+                                autocomplete="off">
+                            <label class="active" for="search-bairro">Bairro</label>
+
+                            <!-- Lista de sugestões de bairros -->
+                            <ul id="lista-bairros"
+                                style="border: 1px solid #ccc; max-height: 150px; overflow-y: auto; display: none;">
+                            </ul>
+                        </div>
+
+
+
+
+                        <!-- Botão de Enviar -->
+                        <div class="row">
+                            <div class="col s6">
+                                <button type="submit" class="btn-large btn-cad">CADASTRAR</button>
+                            </div>
+                            <div class="col s6 modal-footer">
+                                <a href="" id="fechar-modal"
+                                    class="modal-close waves-effect waves-green btn-flat">Fechar</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <script>
+                const searchBairro = document.getElementById('search-bairro');
+                const listaBairros = document.getElementById('lista-bairros');
+
+                // Adicionar evento de input no campo de pesquisa
+                searchBairro.addEventListener('keyup', (e) => {
+                    const searchTerm = searchBairro.value.toLowerCase();
+                    const bairros = JSON.parse(localStorage.getItem('bairros')) || [];
+                    console.log(bairros);
+
+                    // Limpar a lista de sugestões
+                    listaBairros.innerHTML = '';
+
+                    // Filtrar bairros com base no termo de pesquisa
+                    let hasResults = false;
+                    bairros.forEach(bairro => {
+                        if (bairro.nome_bairro.toLowerCase().includes(searchTerm)) {
+                            hasResults = true; // Indica que há resultados
+
+                            // Criar um item da lista para o bairro encontrado
+                            const li = document.createElement('li');
+                            li.textContent = bairro.nome_bairro;
+
+                            // Adicionar evento de clique no item da lista
+                            li.addEventListener('click', () => {
+                                searchBairro.value = bairro.nome_bairro; // Define o valor no input ao clicar
+                                listaBairros.innerHTML = ''; // Limpa a lista após a seleção
+                                listaBairros.style.display = 'none'; // Esconde a lista
+                            });
+
+                            // Adicionar o item à lista de bairros
+                            listaBairros.appendChild(li);
+                        }
+                    });
+
+                    // Mostrar ou ocultar a lista de sugestões
+                    listaBairros.style.display = hasResults ? 'block' : 'none';
+                });
+
+                // Esconder a lista de sugestões ao clicar fora
+                document.addEventListener('click', (e) => {
+                    if (e.target !== searchBairro) {
+                        listaBairros.style.display = 'none';
+                    }
+                });
+            </script>
 
 
 
@@ -297,6 +383,13 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/js/localStorage.js"></script>
     <script src="/js/materialize.min.js"></script>
+    <script>
+        // Inicializar a modal após carregá-la
+        var elems = document.querySelectorAll('.modal');
+        M.Modal.init(elems);
+    </script>
+
+
 
 </body>
 

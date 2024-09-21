@@ -14,6 +14,7 @@
     <script src="/js/pedido.js"></script>
     <script src="/js/CRUD_clientes.js"></script>
     <script src="/js/finalizarPedido.js"></script>
+    <script src="/js/input_functions.js"></script>
     <style>
         @media (max-width: 2000px) {
             main {
@@ -116,20 +117,26 @@
         <!-- Contêiner da modal cadastrar -->
         <div id="modal-cadastrar"> </div>
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const modalContainer = document.getElementById('modal-cadastrar');
+            // Função para carregar a modal e adicionar o filtro
+            // Carregar o modal dinamicamente
+            fetch('modal_cadastrar_cliente.html')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao carregar o modal');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('modal-cadastrar').innerHTML = data;
 
-                fetch('modal_cadastrar_cliente.html')
-                    .then(response => response.text())
-                    .then(data => {
-                        modalContainer.innerHTML = data;
+                    filtrar_bairro();
 
-                        // Inicializar a modal após carregá-la
-                        const elems = document.querySelectorAll('.modal');
-                        M.Modal.init(elems);
-                    })
-                    .catch(error => console.error('Erro ao carregar o modal:', error));
-            });
+                    // Inicializar a modal
+                    const elems = document.querySelectorAll('.modal');
+                    M.Modal.init(elems);
+                })
+                .catch(error => console.error('Erro ao carregar o modal:', error));
+
         </script>
 
 

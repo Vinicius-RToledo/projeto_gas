@@ -35,11 +35,18 @@
 
             <!-- Campo ID Bairro -->
             <div class="input-field col s6">
-                <select id="id_bairro">
-                    <option value="" disabled selected>Selecione um bairro</option>
-                </select>
-                <label for="id_bairro">Bairro</label>
+                <!-- Campo de pesquisa de bairros -->
+                <input type="hidden" id="id_bairro" name="id_bairro">
+                <input type="text" id="search-bairro" placeholder="Digite o nome do bairro..." autocomplete="off">
+                <label class="active" for="search-bairro">Bairro</label>
+
+                <!-- Lista de sugestões de bairros -->
+                <ul id="lista-bairros"
+                    style="border: 1px solid #ccc; max-height: 150px; overflow-y: auto; display: none;"></ul>
             </div>
+
+
+
 
             <!-- Botão de Enviar -->
             <div class="row">
