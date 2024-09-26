@@ -34,54 +34,9 @@ function Script_da_modal_finalizar(){
         });
 
         // Atualiza o subtotal na modal
-        subtotalElement.textContent = subtotal.toFixed(2);
-
-        // Preencher o campo select com clientes do localStorage
-        const selectCliente = document.getElementById('select-cliente');
+        subtotalElement.textContent = subtotal.toFixed(2);        
 
 
-        // Preencher o select com os clientes
-        clientes.forEach(cliente => {
-            const option = document.createElement('option');
-            option.value = cliente.id_cliente;
-            option.textContent = cliente.nome_cliente;
-            selectCliente.appendChild(option);
-        });
-
-        // Inicializar o select do Materialize
-        M.FormSelect.init(selectCliente);
-
-        // Preencher o campo select de bairros do localStorage
-        const selectBairro = document.getElementById('select-bairro');
-        bairros.forEach(bairro => {
-            const option = document.createElement('option');
-            option.value = bairro.id_bairro;
-            option.textContent = `${bairro.nome_bairro}`; //- Frete: R$${bairro.frete_bairro} removi o valor do bairro da label, deixando apenaso nome
-            selectBairro.appendChild(option);
-        });
-        M.FormSelect.init(selectBairro); // Inicializar o select do Materialize
-
-        // Evento para preencher o formulário ao selecionar um cliente
-        selectCliente.addEventListener('change', function () {
-            const clienteSelecionado = clientes.find(cliente => parseInt(cliente.id_cliente) === parseInt(this.value));
-            console.log("Cliente selecionado:", clienteSelecionado);
-
-            if (clienteSelecionado) {
-                //document.getElementById('frete').value = clienteSelecionado.frete_bairro || ''; adicionei esta parte para tentar exibir o frete na label mas não funcionou
-                document.getElementById('rua').value = clienteSelecionado.rua_cliente || '';
-                document.getElementById('numero').value = clienteSelecionado.numero_cliente || '';
-                document.getElementById('telefone').value = clienteSelecionado.telefone_cliente || '';
-
-                // Encontrar o bairro correspondente ao id_bairro do cliente
-                const bairroSelecionado = bairros.find(bairro => bairro.id_bairro === clienteSelecionado.id_bairro);
-                if (bairroSelecionado) {
-                    selectBairro.value = bairroSelecionado.id_bairro;
-                    M.FormSelect.init(selectBairro); // Re-inicializar o select para refletir a seleção
-                }
-
-                M.updateTextFields(); // Atualizar os campos do Materialize
-            }
-        });
     });
 }
 
@@ -97,8 +52,8 @@ async function confirmarPedido(event) {
     const produtos = JSON.parse(localStorage.getItem('produtos')) || [];
 
     // Recuperar os dados do cliente selecionado e outros campos
-    const id_cliente = parseInt(document.getElementById('select-cliente').value);
-    const id_bairro = parseInt(document.getElementById('select-bairro').value);
+    const id_cliente = parseInt(document.getElementById('id_cliente').value);
+    const id_bairro = parseInt(document.getElementById('id_bairro').value);
     const rua_entrega = document.getElementById('rua').value;
     const numero_entrega = document.getElementById('numero').value;
     const telefone_cliente = document.getElementById('telefone').value;

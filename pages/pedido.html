@@ -153,7 +153,7 @@
                 .then(data => {
                     document.getElementById('modal-cadastrar').innerHTML = data;
 
-                    filtrar_bairro();
+                    filtrar_bairro("search-bairro");
 
                     // Inicializar a modal
                     const elems = document.querySelectorAll('.modal');
@@ -176,28 +176,36 @@
                 <form id="cliente-form" onsubmit="confirmarPedido(event)">
                     <!-- Campo Select de Cliente -->
                     <div class="input-field flex-container">
-                        <select id="select-cliente">
-                            <option value="" disabled selected>Selecione um cliente</option>
-                            <!-- Opções serão preenchidas dinamicamente -->
-                        </select>
-                        <label for="select-cliente">Clientes</label>
-
+                        <input type="text" id="search-cliente" placeholder="Buscar cliente...">
+                        <input type="hidden" id="id_cliente" name="id_cliente">
+                        <label for="select-cliente">Cliente</label>
 
                         <a href="#!" class="btn-small btn-new-client modal-trigger" data-target="cadastrar-cliente">
                             <i class="material-icons">add</i>
                         </a>
 
-
-
+                    </div>
+                    <div>
+                        <ul id="lista-clientes"
+                            style="border: 1px solid #ccc; max-height: 150px; overflow-y: auto; display: none;"></ul>
                     </div>
 
                     <!-- Campo Select de Bairro -->
                     <div class="input-field">
-                        <select id="select-bairro">
-                            <option value="" disabled selected>Selecione um bairro</option>
-                        </select>
-                        <label for="select-bairro">Bairro</label>
+                        <!-- Campo de pesquisa de bairros -->
+                        <input type="hidden" id="id_bairro" name="id_bairro">
+                        <input type="text" id="input-bairro" class="validate" placeholder="Digite o nome do bairro..."
+                            autocomplete="off">
+                        <label for="input-bairro">Bairro</label>
+
+                        <!-- Lista de sugestões de bairros -->
+                        <ul id="lista-bairros"
+                            style="border: 1px solid #ccc; max-height: 150px; overflow-y: auto; display: none;"></ul>
                     </div>
+                    <script>
+                        filtrar_bairro("input-bairro");
+                        filtrar_cliente();
+                    </script>
 
                     <div class="row">
                         <!-- Campo Frete -->

@@ -7,109 +7,114 @@
     <title>RC Gás e Água - Produtos</title>
     <!-- Link para o Materialize CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
-    <!-- Seu estilo personalizado -->
-    <link rel="stylesheet" href="/css/materialize.min.css">
     <link rel="stylesheet" href="/css/custom.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="/js/CRUD_clientes.js"></script>
     <script src="/js/input_functions.js"></script>
-    <style>
-        @media (max-width: 2000px) {
-            main {
-                position: relative;
-                /* Ou relative, se preferir */
-                top: 0;
-                left: 0;
-                z-index: 1000;
-                margin-top: 0px;
-            }
+    <script src="/js/localStorage.js"></script>
+</head>
+
+
+<style>
+    @media (max-width: 2000px) {
+        main {
+            position: relative;
+            /* Ou relative, se preferir */
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            margin-top: 0px;
+        }
+    }
+
+    @media (max-width: 885px) {
+        main {
+            margin-top: 100px;
         }
 
-        @media (max-width: 885px) {
-            main {
-                margin-top: 100px;
-            }
-
-            .navegation {
-                height: 150px;
-            }
-
-            #search {
-                text-align: center;
-                font-size: 12px;
-            }
-
-            .label-icon {
-                display: none;
-            }
-        }
-
-        @media (max-width: 430px) {
-            .navegation {
-                height: 300px;
-            }
-
-            main {
-                margin-top: 0px;
-                margin-bottom: 5%;
-            }
-
-            .main-container {
-                margin-top: 10px;
-            }
-
-            .div-botao-voltar {
-                margin-top: 0;
-            }
-
-            #search {
-                text-align: center;
-                font-size: 12px;
-            }
-
-            .label-icon {
-                display: none;
-            }
-
-        }
-
-        .div-botao-voltar {
-            margin-top: 20px;
+        .navegation {
+            height: 150px;
         }
 
         #search {
             text-align: center;
-            font-weight: bold;
+            font-size: 12px;
         }
 
-        .tabela-container {
-            max-height: 230px;
-            /* Ajuste conforme necessário */
-            overflow-y: auto;
-            /* Adiciona rolagem vertical */
-            display: block;
+        .label-icon {
+            display: none;
+        }
+    }
+
+    @media (max-width: 430px) {
+        .navegation {
+            height: 300px;
         }
 
-        .tabela-container table {
-            width: 100%;
-            table-layout: fixed;
-            border-collapse: collapse;
+        main {
+            margin-top: 0px;
+            margin-bottom: 5%;
         }
 
-        .tabela-container thead th {
-            position: -webkit-sticky;
-            /* Para suporte a WebKit */
-            position: sticky;
-            top: 0;
-            background: white;
-            /* Cor de fundo para o cabeçalho fixo */
-            z-index: 10;
-            /* Garante que o cabeçalho fique acima do conteúdo */
-            border-bottom: 2px solid #ddd;
-            /* Adiciona uma borda inferior para o cabeçalho */
+        .main-container {
+            margin-top: 10px;
         }
-    </style>
-</head>
+
+        .div-botao-voltar {
+            margin-top: 0;
+        }
+
+        #search {
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .label-icon {
+            display: none;
+        }
+
+    }
+
+    .div-botao-voltar {
+        margin-top: 20px;
+    }
+
+    #search {
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .tabela-container {
+        max-height: 230px;
+        /* Ajuste conforme necessário */
+        overflow-y: auto;
+        /* Adiciona rolagem vertical */
+        display: block;
+    }
+
+    .tabela-container table {
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+    }
+
+    .tabela-container thead th {
+        position: -webkit-sticky;
+        /* Para suporte a WebKit */
+        position: sticky;
+        top: 0;
+        background: white;
+        /* Cor de fundo para o cabeçalho fixo */
+        z-index: 10;
+        /* Garante que o cabeçalho fique acima do conteúdo */
+        border-bottom: 2px solid #ddd;
+        /* Adiciona uma borda inferior para o cabeçalho */
+    }
+</style>
+
 
 <body>
 
@@ -193,11 +198,15 @@
                     .then(data => {
                         document.getElementById('modal-cadastrar').innerHTML = data;
 
-                        filtrar_bairro();
+                        filtrar_bairro("search-bairro");
 
                         // Inicializar a modal
                         const elems = document.querySelectorAll('.modal');
                         M.Modal.init(elems);
+
+                        const modalElement = document.querySelector('#cadastrar-cliente .modal');
+                        const modalInstance = M.Modal.getInstance(modalElement);
+                        modalInstance.open();
                     })
                     .catch(error => console.error('Erro ao carregar o modal:', error));
 
@@ -258,11 +267,22 @@
                                 <label class="active" for="numero">Número</label>
                             </div>
 
-                            <!-- Campo Bairro -->
+                            <!-- Campo Select de Bairro -->
                             <div class="input-field col s6">
-                                <input id="bairro" name="id_bairro" type="text" class="validate" required>
-                                <label class="active" for="bairro">Bairro</label>
+                                <!-- Campo de pesquisa de bairros -->
+                                <input type="hidden" id="id_bairro" name="id_bairro">
+                                <input type="text" id="input-bairro" class="validate"
+                                    placeholder="Digite o nome do bairro..." autocomplete="off">
+                                <label for="input-bairro">Bairro</label>
+
+                                <!-- Lista de sugestões de bairros -->
+                                <ul id="lista-bairros"
+                                    style="border: 1px solid #ccc; max-height: 150px; overflow-y: auto; display: none;">
+                                </ul>
                             </div>
+                            <script>
+                                filtrar_bairro("input-bairro");
+                            </script>
                         </div>
 
                         <!-- Botão de Enviar -->
@@ -322,10 +342,10 @@
         });
     </script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
     <script src="/js/localStorage.js"></script>
-    <script src="/js/materialize.min.js"></script>
+
 
 </body>
 

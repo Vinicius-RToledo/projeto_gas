@@ -1,6 +1,6 @@
-function filtrar_bairro(){
+function filtrar_bairro(id_input){
     // Inicializar o filtro de bairros aqui
-    const searchBairro = document.getElementById('search-bairro');
+    const searchBairro = document.getElementById(id_input);
     const listaBairros = document.getElementById('lista-bairros');
 
     searchBairro.addEventListener('keyup', (e) => {
@@ -18,6 +18,10 @@ function filtrar_bairro(){
                 li.addEventListener('click', () => {
                     searchBairro.value = bairro.nome_bairro;
                     document.getElementById('id_bairro').value = bairro.id_bairro;
+                    const frete = document.getElementById('frete');
+                    if (frete){
+                        frete.value = bairro.frete_bairro || '';
+                    }
                     listaBairros.innerHTML = '';
                     listaBairros.style.display = 'none';
                 });
@@ -47,8 +51,30 @@ function filtrar_cliente() {
                 li.textContent = cliente.nome_cliente;
 
                 li.addEventListener('click', () => {
+                    // atualiza a modal do html para preencher corretamente 
+                    $(document).ready(function () {
+                        M.updateTextFields();
+                    });
+                    
+                    // Preencher os inputs com os dados do cliente selecionado
                     searchCliente.value = cliente.nome_cliente;
-                    document.getElementById('id_cliente').value = cliente.id_cliente; // Supondo que o ID do cliente está em cliente.id_cliente
+                    document.getElementById('id_cliente').value = cliente.id_cliente;
+
+                    // Preencher outros campos do formulário
+                    document.getElementById('rua').value = cliente.rua_cliente || '';
+                    document.getElementById('numero').value = cliente.numero_cliente || '';
+                    document.getElementById('telefone').value = cliente.telefone_cliente || '';
+
+                    // Encontrar o bairro correspondente ao id_bairro do cliente
+                    const bairros = JSON.parse(localStorage.getItem('bairros')) || []; // Supondo que você tenha os bairros no localStorage
+                    const bairroSelecionado = bairros.find(bairro => bairro.id_bairro === cliente.id_bairro);
+                    if (bairroSelecionado) {
+                        document.getElementById('frete').value = bairroSelecionado.frete_bairro || ''; // Adicionando o frete
+                        const searchBairro = document.getElementById('input-bairro'); // Ajuste para o ID correto
+                        searchBairro.value = bairroSelecionado.nome_bairro;
+                        console.log("Bairro Selecionado:", searchBairro, "ID:", bairroSelecionado.id_bairro);
+                    }
+
                     listaClientes.innerHTML = '';
                     listaClientes.style.display = 'none';
                 });
@@ -60,3 +86,4 @@ function filtrar_cliente() {
         listaClientes.style.display = hasResults ? 'block' : 'none';
     });
 }
+

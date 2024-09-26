@@ -101,13 +101,28 @@ function editarCliente(id_cliente) {
     
     let clientes = [];
     
+    async function carregarDados() {
+        clientes = JSON.parse(localStorage.getItem("clientes")); // Chama a função e espera sua resolução
+        
+        console.log('teste ok', clientes); // Exibe os cientea recuperados
+        if (!Array.isArray(clientes)) {
+            console.error('O retorno de getLocalStorage não é um array.', clientes);
+            return;
+        }
+        const cliente = clientes.find(c => c.id_cliente === parseInt(id_cliente));
+
+        if (cliente) {
+            console.log('Cliente encontrado:', cliente);
+
+            // Preenche os campos do formulário com os dados do cliente
+           preencherFormulario(cliente);
+
+        } else {
+            console.error('Cliente não encontrado no localStorage.');
+        }
+    }
     
-    clientes = JSON.parse(localStorage.getItem('clientes')); // Chama a função e espera sua resolução        
-    const cliente = clientes.find(c => c.id_cliente === parseInt(id_cliente));   
-    
-    
-    // Preenche os campos do formulário com os dados do cliente
-    preencherFormulario(cliente);    
+    carregarDados();  
         
     
     function preencherFormulario(cliente) {
@@ -117,15 +132,30 @@ function editarCliente(id_cliente) {
         const inputTelefone = document.getElementById('telefone');
         const inputRua = document.getElementById('rua');
         const inputNumero = document.getElementById('numero');
-        const inputBairro = document.getElementById('bairro');
-    
+        const inputID_Bairro = document.getElementById('id_bairro');
+        const inputBairro = document.getElementById('input-bairro');
+
+        
         if (inputId && inputNome && inputTelefone && inputRua && inputNumero && inputBairro) {
             inputId.value = cliente.id_cliente || '';
             inputNome.value = cliente.nome_cliente || '';
             inputTelefone.value = cliente.telefone_cliente || '';
             inputRua.value = cliente.rua_cliente || '';
             inputNumero.value = cliente.numero_cliente || '';
-            inputBairro.value = cliente.id_bairro || '';
+            inputID_Bairro.value = cliente.id_bairro || '';
+            
+            
+            // Obtém a lista de bairros do localStorage
+            const bairros = JSON.parse(localStorage.getItem('bairros')) || [];
+            // Busca o bairro pelo ID
+            const bairro = bairros.find(b => b.id_bairro === cliente.id_bairro);
+            // Preenche o campo de bairro com o nome do bairro, se encontrado
+            if (bairro) {
+                inputBairro.value = bairro.nome_bairro;
+            } else {
+                inputBairro.value = ''; // Limpa o campo se não encontrado
+                document.getElementById('id_bairro').value = ''; // Limpa o ID do bairro se não encontrado
+            }
         } else {
             console.error("Um ou mais elementos do formulário não foram encontrados no DOM.");
         }
@@ -141,7 +171,7 @@ function editarCliente(id_cliente) {
         const telefone_cliente = document.getElementById('telefone').value;
         const rua_cliente = document.getElementById('rua').value;
         const numero_cliente = document.getElementById('numero').value;
-        const id_bairro = document.getElementById('bairro').value;
+        const id_bairro = parseInt(document.getElementById('id_bairro').value);
     
         // Dados a serem enviados
         const clienteAtualizado = {
