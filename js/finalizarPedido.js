@@ -45,7 +45,7 @@ async function confirmarPedido(event) {
     event.preventDefault();
     
     // Recuperar as tabelas do localStorage
-    const notas = JSON.parse(localStorage.getItem('nota_venda')) || [];
+    const notas = JSON.parse(localStorage.getItem('vendas')) || [];
     const itens = JSON.parse(localStorage.getItem('item_nota_venda')) || [];
     const bairros = JSON.parse(localStorage.getItem('bairros')) || [];
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -103,7 +103,7 @@ async function confirmarPedido(event) {
         notas.push(novaNotaVenda);
 
         // Salvar no localStorage
-        localStorage.setItem('nota_venda', JSON.stringify(notas));
+        localStorage.setItem('vendas', JSON.stringify(notas));
 
         const id_nota_venda = novaNotaVenda.id_nota_venda;
 

@@ -71,8 +71,10 @@ function filtrar_cliente() {
                     if (bairroSelecionado) {
                         document.getElementById('frete').value = bairroSelecionado.frete_bairro || ''; // Adicionando o frete
                         const searchBairro = document.getElementById('input-bairro'); // Ajuste para o ID correto
+                        const IDBairro = document.getElementById('id_bairro'); // Ajuste para o ID correto
+
                         searchBairro.value = bairroSelecionado.nome_bairro;
-                        console.log("Bairro Selecionado:", searchBairro, "ID:", bairroSelecionado.id_bairro);
+                        IDBairro.value = bairroSelecionado.id_bairro;
                     }
 
                     listaClientes.innerHTML = '';
