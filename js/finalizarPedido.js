@@ -1,7 +1,7 @@
 
 
 
-function Script_da_modal_finalizar(){
+async function Script_da_modal_finalizar(){
     document.addEventListener('DOMContentLoaded', function () {
         const clientes = JSON.parse(localStorage.getItem('clientes')) || [];
         const bairros = JSON.parse(localStorage.getItem('bairros')) || [];
@@ -77,12 +77,17 @@ async function confirmarPedido(event) {
     });
 
     subtotal += parseFloat(frete);
-
+        
     // Criar o objeto nota_venda
     let novaNotaVenda = {
         id_nota_venda: null,
         valor_total: parseFloat(subtotal),
-        data_nota_venda: new Date().toISOString().split('T')[0], // Data de hoje no formato 'YYYY-MM-DD'
+        data_nota_venda: new Date().toLocaleDateString('pt-BR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            timeZone: 'America/Sao_Paulo' // Ajuste para o fuso horário desejado
+        }).split('/').reverse().join('-'), // Converte para o formato 'YYYY-MM-DD'
         id_cliente: id_cliente,
         id_tipo_pagamento: 1,
         id_bairro_entrega: id_bairro,
@@ -90,6 +95,7 @@ async function confirmarPedido(event) {
         numero_entrega: numero_entrega,
         telefone_entrega: telefone_cliente
     };
+
 
     try {
         // Adicionar a nova nota à lista de notas
