@@ -189,3 +189,29 @@ main {
     width: 30px;
 }
 
+#lista-clientes, #lista-bairros {
+    background-color: #f0f0f0; /* Fundo cinza claro */
+    border: 1px solid #ccc; /* Borda leve */
+    border-radius: 8px; /* Bordas arredondadas */
+    max-height: 200px; /* Limita a altura da lista */
+    overflow-y: auto; /* Adiciona barra de rolagem se necessário */
+    margin-top: 10px; /* Espaçamento do campo de busca */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidade */
+    display: none; /* Inicia oculto */
+    padding: 0;
+    list-style-type: none; /* Remove marcadores de lista */
+}
+
+#lista-clientes li, #lista-bairros li {
+    padding: 10px; /* Espaçamento interno dos itens */
+    cursor: pointer; /* Mostra que os itens são clicáveis */
+    border-bottom: 1px solid #ddd; /* Linha entre os itens */
+}
+
+#lista-clientes li:hover, #lista-bairros li:hover {
+    background-color: #e0e0e0; /* Cor de fundo ao passar o mouse */
+}
+
+#lista-clientes li:last-child, #lista-bairros li:last-child {
+    border-bottom: none; /* Remove a borda inferior do último item */
+}

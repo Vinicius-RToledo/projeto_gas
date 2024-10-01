@@ -1,5 +1,5 @@
-function filtrar_bairro(id_input){
-    // Inicializar o filtro de bairros aqui
+function filtrar_bairro(id_input) {
+    // Inicializar o filtro de bairros
     const searchBairro = document.getElementById(id_input);
     const listaBairros = document.getElementById('lista-bairros');
 
@@ -16,12 +16,18 @@ function filtrar_bairro(id_input){
                 li.textContent = bairro.nome_bairro;
 
                 li.addEventListener('click', () => {
+                    // Preenche o input com o nome do bairro selecionado
                     searchBairro.value = bairro.nome_bairro;
+                    // Preenche o campo oculto com o id do bairro
                     document.getElementById('id_bairro').value = bairro.id_bairro;
+
+                    // Se houver o campo de frete, preencha-o
                     const frete = document.getElementById('frete');
-                    if (frete){
+                    if (frete) {
                         frete.value = bairro.frete_bairro || '';
                     }
+
+                    // Esconde a lista de bairros
                     listaBairros.innerHTML = '';
                     listaBairros.style.display = 'none';
                 });
@@ -32,7 +38,16 @@ function filtrar_bairro(id_input){
 
         listaBairros.style.display = hasResults ? 'block' : 'none';
     });
+
+    // Esconde a lista ao clicar fora do campo de input ou da lista
+    document.addEventListener('click', (event) => {
+        const isClickInside = searchBairro.contains(event.target) || listaBairros.contains(event.target);
+        if (!isClickInside) {
+            listaBairros.style.display = 'none';
+        }
+    });
 }
+
 
 function filtrar_cliente() {
     const searchCliente = document.getElementById('search-cliente');
@@ -51,11 +66,11 @@ function filtrar_cliente() {
                 li.textContent = cliente.nome_cliente;
 
                 li.addEventListener('click', () => {
-                    // atualiza a modal do html para preencher corretamente 
+                    // Atualiza a modal do HTML para preencher corretamente
                     $(document).ready(function () {
                         M.updateTextFields();
                     });
-                    
+
                     // Preencher os inputs com os dados do cliente selecionado
                     searchCliente.value = cliente.nome_cliente;
                     document.getElementById('id_cliente').value = cliente.id_cliente;
@@ -66,12 +81,12 @@ function filtrar_cliente() {
                     document.getElementById('telefone').value = cliente.telefone_cliente || '';
 
                     // Encontrar o bairro correspondente ao id_bairro do cliente
-                    const bairros = JSON.parse(localStorage.getItem('bairros')) || []; // Supondo que você tenha os bairros no localStorage
+                    const bairros = JSON.parse(localStorage.getItem('bairros')) || [];
                     const bairroSelecionado = bairros.find(bairro => bairro.id_bairro === cliente.id_bairro);
                     if (bairroSelecionado) {
                         document.getElementById('frete').value = bairroSelecionado.frete_bairro || ''; // Adicionando o frete
-                        const searchBairro = document.getElementById('input-bairro'); // Ajuste para o ID correto
-                        const IDBairro = document.getElementById('id_bairro'); // Ajuste para o ID correto
+                        const searchBairro = document.getElementById('input-bairro');
+                        const IDBairro = document.getElementById('id_bairro');
 
                         searchBairro.value = bairroSelecionado.nome_bairro;
                         IDBairro.value = bairroSelecionado.id_bairro;
@@ -87,5 +102,14 @@ function filtrar_cliente() {
 
         listaClientes.style.display = hasResults ? 'block' : 'none';
     });
+
+    // Esconder a lista de clientes ao clicar fora do campo de busca e da lista
+    document.addEventListener('click', (event) => {
+        const isClickInside = searchCliente.contains(event.target) || listaClientes.contains(event.target);
+        if (!isClickInside) {
+            listaClientes.style.display = 'none';
+        }
+    });
 }
+
 
