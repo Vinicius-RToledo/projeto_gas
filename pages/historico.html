@@ -94,6 +94,19 @@
             border-bottom: 2px solid #ddd;
             /* Adiciona uma borda inferior para o cabeçalho */
         }
+
+        /* Estilo para adicionar um título no cabeçalho do Datepicker */
+
+        .datepicker-date-display::before {
+            content: "data inicio";
+            /* Usa o valor do atributo data-title */
+            display: block;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            /* Espaçamento entre o título e a data */
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -151,22 +164,105 @@
             </div>
 
             <div class="row">
-                <div class="col s4 offset-s1">
+                <!-- Campo de Data Inicial -->
+                <div class="col s4 offset-s1" data-title="Data Inicio">
                     <div class="input-field">
                         <i class="material-icons prefix">calendar_month</i>
                         <input type="text" id="data-inicio" class="datepicker center orange darken-4 datepicker-input"
                             placeholder="De">
                     </div>
+
                 </div>
-                <div class="col s2"></div>
+
+                <div class="col s2"></div> <!-- Espaço entre os campos -->
+
+                <!-- Campo de Data Final -->
                 <div class="col s4">
                     <div class="input-field">
                         <i class="material-icons prefix">calendar_month</i>
                         <input type="text" id="data-fim" class="datepicker center orange darken-4 datepicker-input"
                             placeholder="Até">
+                        <label for="data-fim">Data Final</label>
                     </div>
                 </div>
             </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    var dataInicioElem = document.getElementById('data-inicio');
+                    var dataFimElem = document.getElementById('data-fim');
+
+                    // Inicializa o datepicker da data inicial
+                    var dataInicioPicker = M.Datepicker.init(dataInicioElem, {
+                        format: 'dd/mm/yyyy',
+                        i18n: {
+                            cancel: 'Cancelar',
+                            clear: 'Limpar',
+                            done: 'Selecionar',
+                            labelMonthNext: 'Próximo mês',
+                            labelMonthPrev: 'Mês anterior',
+                            months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                            monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                            weekdays: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
+                            weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+                            weekdaysAbbrev: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
+                        },
+                        onClose: function () {
+                            var dataInicio = dataInicioPicker.date; // Pega a data escolhida como início
+
+                            if (dataInicio) {
+                                // Define o limite de 15 dias a partir da data de início
+                                var maxDate = new Date(dataInicio);
+                                maxDate.setDate(maxDate.getDate() + 14); // 15 dias após a data inicial
+
+                                // Inicializa o datepicker da data final com os limites de data
+                                M.Datepicker.init(dataFimElem, {
+                                    format: 'dd/mm/yyyy',
+                                    minDate: dataInicio, // Definir a data mínima como a data de início
+                                    maxDate: maxDate,    // Definir a data máxima 15 dias depois da data de início
+                                    defaultDate: dataInicio, // Define a data inicial como a data padrão
+                                    setDefaultDate: true, // Faz com que o calendário mostre a data inicial como selecionada
+                                    i18n: {
+                                        cancel: 'Cancelar',
+                                        clear: 'Limpar',
+                                        done: 'Selecionar',
+                                        labelMonthNext: 'Próximo mês',
+                                        labelMonthPrev: 'Mês anterior',
+                                        months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                                        monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                                        weekdays: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
+                                        weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+                                        weekdaysAbbrev: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
+                                    }
+                                });
+
+                                // Abre automaticamente o datepicker da data final para o usuário escolher
+                                var dataFimPicker = M.Datepicker.getInstance(dataFimElem);
+                                dataFimPicker.open();
+                            }
+                        }
+                    });
+
+                    // Inicializa o datepicker da data final sem restrições inicialmente
+                    M.Datepicker.init(dataFimElem, {
+                        format: 'dd/mm/yyyy',
+                        i18n: {
+                            cancel: 'Cancelar',
+                            clear: 'Limpar',
+                            done: 'Selecionar',
+                            labelMonthNext: 'Próximo mês',
+                            labelMonthPrev: 'Mês anterior',
+                            months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                            monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                            weekdays: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
+                            weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+                            weekdaysAbbrev: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
+                        }
+                    });
+                });
+            </script>
+
+
 
             <div class="row">
                 <div class="col s12 center">
@@ -185,54 +281,7 @@
         </div>
     </footer>
 
-    <script>
 
-        // Script para filtar os pedidos através das datas selecionadas
-
-        function filtrarVendas() {
-            // Obtém os valores das datas selecionadas
-            const dataInicio = document.getElementById('data-inicio').value;
-            const dataFim = document.getElementById('data-fim').value;
-
-            // Verifica se as datas foram preenchidas
-            if (!dataInicio || !dataFim) {
-                alert('Por favor, selecione ambas as datas.');
-                return;
-            }
-
-            // Converte as datas para o formato padrão (YYYY-MM-DD) para facilitar a comparação
-            const inicio = new Date(dataInicio.split('/').reverse().join('-'));
-            const fim = new Date(dataFim.split('/').reverse().join('-'));
-
-            // Obtém todas as linhas da tabela
-            const linhas = document.querySelectorAll('#tabela-corpo tr');
-
-            // Itera sobre as linhas e filtra as vendas pela data
-            linhas.forEach(linha => {
-                // Obtém a data da venda da coluna 3 (índice 2)
-                const dataVendaTexto = linha.cells[2].textContent;
-                const dataVenda = new Date(dataVendaTexto.split('/').reverse().join('-'));
-
-                // Verifica se a data da venda está entre as datas selecionadas
-                if (dataVenda >= inicio && dataVenda <= fim) {
-                    linha.style.display = ''; // Exibe a linha se estiver no intervalo
-                } else {
-                    linha.style.display = 'none'; // Esconde a linha se estiver fora do intervalo
-                }
-            });
-        }
-    </script>
-
-
-    <script>
-        //Script para manipulação dos calendários
-        document.addEventListener('DOMContentLoaded', function () {
-            var elems = document.querySelectorAll('.datepicker');
-            M.Datepicker.init(elems, {
-                format: 'dd/mm/yyyy'
-            });
-        });
-    </script>
     <script src="/js/materialize.min.js"></script>
     <script src="/js/localStorage.js">
         getLocalStorage("produtos");
