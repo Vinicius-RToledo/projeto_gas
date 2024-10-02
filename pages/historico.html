@@ -94,19 +94,6 @@
             border-bottom: 2px solid #ddd;
             /* Adiciona uma borda inferior para o cabeçalho */
         }
-
-        /* Estilo para adicionar um título no cabeçalho do Datepicker */
-
-        .datepicker-date-display::before {
-            content: "data inicio";
-            /* Usa o valor do atributo data-title */
-            display: block;
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 5px;
-            /* Espaçamento entre o título e a data */
-            text-align: center;
-        }
     </style>
 </head>
 
@@ -165,13 +152,13 @@
 
             <div class="row">
                 <!-- Campo de Data Inicial -->
-                <div class="col s4 offset-s1" data-title="Data Inicio">
+                <div class="col s4 offset-s1">
                     <div class="input-field">
                         <i class="material-icons prefix">calendar_month</i>
                         <input type="text" id="data-inicio" class="datepicker center orange darken-4 datepicker-input"
                             placeholder="De">
+                        <label for="data-inicio">Data Inicial</label>
                     </div>
-
                 </div>
 
                 <div class="col s2"></div> <!-- Espaço entre os campos -->
