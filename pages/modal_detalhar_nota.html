@@ -1,0 +1,63 @@
+<!-- Modal Detalhar Pedido -->
+<div id="detalhar-venda" class="modal">
+    <div class="modal-content">
+        <h4>Detalhes do Pedido</h4>
+
+        <!-- Lista de itens no pedido -->
+        <h5 class="center">Itens do Pedido</h5>
+        <ul id="cart-items-detalhar" class="collection"></ul>
+        <h5>Subtotal dos itens: R$<span id="subtotal-itens-detalhar">0.00</span></h5>
+        <h5>Valor Frete: R$<span id="frete-detalhar">0.00</span></h5>
+        <h5>Subtotal: R$<span id="subtotal-detalhar">0.00</span></h5>
+
+        <!-- Dados do Cliente -->
+        <h5 class="center">Dados do Cliente</h5>
+        <div class="row">
+            <!-- Campo Nome do Cliente -->
+            <div class="input-field col s6">
+                <input id="nome_cliente_detalhar" type="text" class="validate" disabled>
+                <label for="nome_cliente_detalhar" class="active">Nome do Cliente</label>
+            </div>
+
+            <!-- Campo Telefone -->
+            <div class="input-field col s6">
+                <input id="telefone_cliente_detalhar" type="tel" class="validate" disabled>
+                <label for="telefone_cliente_detalhar" class="active">Telefone</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Campo Bairro -->
+            <div class="input-field col s6">
+                <input id="bairro_detalhar" type="text" class="validate" disabled>
+                <label for="bairro_detalhar" class="active">Bairro</label>
+            </div>
+
+            <!-- Campo Rua -->
+            <div class="input-field col s6">
+                <input id="rua_detalhar" type="text" class="validate" disabled>
+                <label for="rua_detalhar" class="active">Rua</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Campo Número -->
+            <div class="input-field col s6">
+                <input id="numero_detalhar" type="number" class="validate" disabled>
+                <label for="numero_detalhar" class="active">Número</label>
+            </div>
+
+            <!-- Campo Observações (se houver) -->
+            <div class="input-field col s6">
+                <textarea id="observacoes_detalhar" class="materialize-textarea" disabled></textarea>
+                <label for="observacoes_detalhar" class="active">Observações</label>
+            </div>
+        </div>
+
+
+
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Fechar</a>
+        </div>
+    </div>
+</div>

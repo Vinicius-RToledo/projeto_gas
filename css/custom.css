@@ -149,6 +149,11 @@ main {
 
 }
 
+.venda-icon {
+    color: var(--cor-secundaria);
+
+}
+
 .table-icons:hover {
     --cor-primaria: #0301fa;
     --cor-secundaria: white;

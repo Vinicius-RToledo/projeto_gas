@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/css/materialize.min.css">
     <link rel="stylesheet" href="/css/custom.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="/js/CRUD_balanco.js"></script>
+    <script src="/js/modal_detalhar_nota.js"></script>
     <style>
         @media (max-width: 2000px) {
             main {
@@ -148,7 +150,7 @@
 
                                 </tbody>
                             </table>
-                            <script src="/js/CRUD_balanco.js"></script>
+
                             <script>
                                 // Certifique-se de que o DOM foi carregado antes de chamar a função
                                 document.addEventListener('DOMContentLoaded', function () {
@@ -191,7 +193,34 @@
                     </div>
                 </div>
             </div>
+
+            <div id="modal-placeholder"></div>
+            <script>
+                // Carrega o HTML da modal de um arquivo separado
+                async function carregarModal() {
+                    try {
+                        const response = await fetch('modal_detalhar_nota.html');
+                        if (!response.ok) {
+                            throw new Error('Erro ao carregar modal: ' + response.statusText);
+                        }
+                        const modalHtml = await response.text();
+                        document.getElementById('modal-placeholder').innerHTML = modalHtml;
+
+                        // Inicia a modal após carregar o HTML
+                        M.Modal.init(document.querySelector('#detalhar-venda'));
+                    } catch (error) {
+                        console.error(error);
+                    }
+                }
+
+                // Chamando a função para carregar a modal
+                carregarModal();
+
+
+            </script>
+
         </div>
+
 
     </main>
 

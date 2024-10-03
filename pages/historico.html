@@ -12,7 +12,9 @@
     <link rel="stylesheet" href="/css/materialize.min.css">
     <link rel="stylesheet" href="/css/custom.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <script src="/js/CRUD_historico.js"></script>
+    <script src="/js/modal_detalhar_nota.js"></script>
     <style>
         @media (max-width: 2000px) {
             main {
@@ -142,6 +144,7 @@
                                 <th>Descrição</th>
                                 <th>Telefone</th>
                                 <th>Valor Total</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
 
@@ -250,13 +253,39 @@
                 });
             </script>
 
-
-
             <div class="row">
                 <div class="col s12 center">
                     <button id="filtrar-vendas" class="btn btn-filtrar" onclick="filtrarVendas()">Filtrar</button>
                 </div>
             </div>
+
+            <div id="modal-placeholder"></div>
+            <script>
+                // Carrega o HTML da modal de um arquivo separado
+                async function carregarModal() {
+                    try {
+                        const response = await fetch('modal_detalhar_nota.html');
+                        if (!response.ok) {
+                            throw new Error('Erro ao carregar modal: ' + response.statusText);
+                        }
+                        const modalHtml = await response.text();
+                        document.getElementById('modal-placeholder').innerHTML = modalHtml;
+
+                        // Inicia a modal após carregar o HTML
+                        M.Modal.init(document.querySelector('#detalhar-venda'));
+                    } catch (error) {
+                        console.error(error);
+                    }
+                }
+
+                // Chamando a função para carregar a modal
+                carregarModal();
+
+
+            </script>
+
+
+
 
         </div>
     </main>
@@ -269,7 +298,7 @@
         </div>
     </footer>
 
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/js/materialize.min.js"></script>
     <script src="/js/localStorage.js">
         getLocalStorage("produtos");

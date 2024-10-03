@@ -52,6 +52,8 @@ function listaVendasDia() {
         const cellAcoes = document.createElement('td');
         const divAcoes = document.createElement('div');
         divAcoes.className = 'icon-actions'; // Classe para estilizar a div de ações
+
+        
     
         // Botão de Detalhar com ícone
         const btnDetalhar = document.createElement('a');

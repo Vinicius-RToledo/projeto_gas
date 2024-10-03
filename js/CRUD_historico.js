@@ -61,6 +61,14 @@ function popularTabela(vendas) {
             <td>${venda.rua_entrega || 'N/A'}</td>
             <td>${venda.telefone_entrega || 'N/A'}</td>
             <td>${venda.valor_total.toFixed(2)}</td>
+            <td>
+                <a class="table-icons waves-effect waves-light btn-small modal-trigger" 
+                id="btns-home" 
+                data-target="detalhar-venda" 
+                onclick="detalharVenda(${venda.id_nota_venda})">
+                    <i class="material-icons venda-icon">visibility</i>
+                </a>
+            </td>
         `;
         tabelaCorpo.appendChild(row);
     });
